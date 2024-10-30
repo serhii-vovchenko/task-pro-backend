@@ -4,7 +4,7 @@ import pino from 'pino-http';
 import { env } from './utils/env.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-
+import router from "./routers/index.js"
 const PORT = Number(env('PORT', '3000'));
 
 const setupServer = () => {
@@ -32,6 +32,8 @@ const setupServer = () => {
       message: 'Home page Task Pro!',
     });
   });
+
+  app.use(router)
 
   app.use(notFoundHandler);
 
