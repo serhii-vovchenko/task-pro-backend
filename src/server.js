@@ -8,6 +8,7 @@ import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 const PORT = Number(env('PORT', '3000'));
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import { UPLOAD_DIR } from './constants/swagger.js';
 
 const setupServer = () => {
   const app = express();
