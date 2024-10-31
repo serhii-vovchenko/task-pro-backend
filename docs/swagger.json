@@ -750,6 +750,36 @@
           }
         }
       }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout user",
+        "description": "Logs out the user by deleting the session identified by sessionId cookie ",
+        "operationId": "logoutUser",
+        "security": [],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session ID stored in cookies, used to identify and delete the session."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User successfully loged out, no content returned"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
     }
   },
   "components": {
