@@ -1,0 +1,69 @@
+tags:
+  - Auth
+summary: Register an user
+description: 'Register an user'
+operationId: registerUser
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            type: string
+            minLength: 3
+            maxLength: 30
+            example: 'John'
+          email:
+            type: string
+            example: 'john@gmail.com'
+          password:
+            type: string
+            minLength: 6
+            example: 'examplepwd'
+responses:
+  '201':
+    description: 'Registered an user'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Successfully registered an user'
+            data:
+              type: object
+              required:
+                - _id
+                - name
+                - email
+              properties:
+                _id:
+                  description: "User's id"
+                  type: string
+                  example: '671264281222679af8484a00'
+                name:
+                  description: "User's name"
+                  type: string
+                  example: 'John'
+                email:
+                  description: "User's email"
+                  type: string
+                  example: 'john@gmail.com'
+  '400':
+    description: 'Bad request'
+  '409':
+    $ref: ../../components/responses/409.yaml
