@@ -1,14 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
+import cookieParser from 'cookie-parser';
+
+import router from './routers/index.js';
 import { env } from './utils/env.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import router from './routers/index.js';
-import cookieParser from 'cookie-parser';
-const PORT = Number(env('PORT', '3000'));
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 import { UPLOAD_DIR } from './constants/swagger.js';
+
+const PORT = Number(env('PORT', '3000'));
 
 const setupServer = () => {
   const app = express();
