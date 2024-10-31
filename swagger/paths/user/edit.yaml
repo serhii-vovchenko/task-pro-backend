@@ -1,0 +1,55 @@
+tags:
+  - Users
+summary: Update current user
+operationId: patchCurrentUser
+description: 'Update the currently authenticated user information.'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            description: "User's name"
+            example: 'John Doe'
+          email:
+            type: string
+            description: "User's email"
+            example: 'john.doe@example.com'
+          password:
+            type: string
+            description: |
+              "User's password (may contain Latin letters, numbers, and symbols;
+              - signs can be in different cases; 
+              - can contain from 8 to 64 characters (inclusive);
+              - cannot contain spaces)"
+            example: 'password123'
+          photoUrl:
+            description: "Link to user's photo"
+            type: string
+            format: binary
+responses:
+  '200':
+    description: 'Successfully updated user information'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated user information!
+            data:
+              $ref: '../../components/schemas/user.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
