@@ -780,6 +780,208 @@
           }
         }
       }
+    },
+    "/user/current": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get current user",
+        "operationId": "getCurrentUser",
+        "description": "Get the currently authenticated user information.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get current user information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully retrieved user information!",
+                      "data": {
+                        "$ref": "../../../components/schemas/user.yaml"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/user/theme": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user theme",
+        "operationId": "patchUserTheme",
+        "description": "Update the theme preference for the currently authenticated user.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "theme": {
+                    "description": "Preferred theme of the user",
+                    "type": "string",
+                    "enum": [
+                      "dark",
+                      "light",
+                      "violet"
+                    ],
+                    "example": "light"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated theme preference",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated theme preference!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "theme": {
+                          "type": "string",
+                          "example": "dark"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/user/edit": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update current user",
+        "operationId": "patchCurrentUser",
+        "description": "Update the currently authenticated user information.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "User's name",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "example": "john.doe@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "\"User's password (may contain Latin letters, numbers, and symbols;\n- signs can be in different cases; \n- can contain from 8 to 64 characters (inclusive);\n- cannot contain spaces)\"\n",
+                    "example": "password123"
+                  },
+                  "photoUrl": {
+                    "description": "Link to user's photo",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated user information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated user information!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -850,6 +1052,50 @@
             "type": "string",
             "format": "date-time",
             "example": "2024-10-25T12:00:00Z"
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "description": "User's password (required may contain Latin letters, numbers and symbols; - signs can be in different registers; - can contain from 8 to 64 characters (inclusive); - cannot contain spaces);",
+            "type": "string",
+            "example": "P@ssw0rd"
+          },
+          "photoUrl": {
+            "description": "Link to user's avatar",
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "binary",
+                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+              },
+              {
+                "type": "null",
+                "example": null
+              }
+            ]
+          },
+          "theme": {
+            "description": "theme of interface",
+            "type": "string",
+            "enum": [
+              "dark",
+              "light",
+              "violet"
+            ],
+            "example": "light"
           }
         }
       }

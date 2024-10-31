@@ -1,0 +1,44 @@
+tags:
+  - Users
+summary: Update user theme
+operationId: patchUserTheme
+description: 'Update the theme preference for the currently authenticated user.'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          theme:
+            description: 'Preferred theme of the user'
+            type: string
+            enum: [dark, light, violet]
+            example: light
+responses:
+  '200':
+    description: 'Successfully updated theme preference'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated theme preference!
+            data:
+              type: object
+              properties:
+                theme:
+                  type: string
+                  example: dark
+  '401':
+    $ref: '../../components/responses/401.yaml'
