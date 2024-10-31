@@ -1,0 +1,74 @@
+tags:
+  - Tasks
+summary: Update task
+operationId: updateTask
+description: 'Update task by ID'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          title:
+            description: "Task's title"
+            type: string
+            example: 'Complete report'
+          description:
+            description: "Task's description"
+            type: string
+            example:
+              'Prepare and submit the financial report by the end of the week.'
+          dueDate:
+            description: "Task's due date"
+            type: string
+            format: date
+            example: '2024-11-01'
+          priority:
+            description: 'Priority level of the task'
+            type: string
+            enum: ['low', 'medium', 'high']
+          isCompleted:
+            description: 'Status of task completion'
+            type: boolean
+            example: false
+          attachment:
+            type: string
+            format: binary
+            description: 'File attachment for the task'
+            example: https://res.cloudinary.com/dsf7ryper/image/upload/v1724619697/file.pdf
+responses:
+  '200':
+    description: 'Update task by ID'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated task
+            data:
+              type: object
+              $ref: '../../../components/schemas/task.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

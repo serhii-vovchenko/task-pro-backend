@@ -1,0 +1,23 @@
+tags:
+  - Tasks
+summary: Delete task by ID
+operationId: deleteTask
+description: 'Delete a task by its ID'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '66cb82062c60d9a89bb75c56'
+responses:
+  '204':
+    description: Successfully deleted task, no content returned
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
