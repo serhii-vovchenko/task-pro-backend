@@ -1,0 +1,76 @@
+tags:
+  - Tasks
+summary: Create task
+operationId: createTask
+description: 'Create a task with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - title
+          - description
+          - dueDate
+          - priority
+          - assignedTo
+        properties:
+          title:
+            description: "Task's title"
+            type: string
+            example: 'Complete project report'
+          description:
+            description: "Task's description"
+            type: string
+            example: 'Write and submit the project report by end of the week.'
+          dueDate:
+            description: "Task's due date"
+            type: string
+            format: date
+            example: '2024-10-31'
+          priority:
+            description: "Task's priority level"
+            type: string
+            enum: ['low', 'medium', 'high']
+          status:
+            description: 'Current status of the task'
+            type: string
+            enum: ['not started', 'in progress', 'completed']
+          assignedTo:
+            description: 'ID of the user the task is assigned to'
+            type: string
+            example: 65e4decdd286b30065d54af9
+          createdAt:
+            description: 'Date when the task was created'
+            type: string
+            format: date-time
+            example: '2024-10-25T12:00:00Z'
+responses:
+  '201':
+    description: Creates a task
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a task!
+            data:
+              type: object
+              $ref: '../../components/schemas/task.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: ../../components/responses/404.yaml
+  '500':
+    $ref: '../../components/responses/500.yaml'

@@ -4,9 +4,11 @@ import pino from 'pino-http';
 import { env } from './utils/env.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import router from "./routers/index.js"
+import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 const PORT = Number(env('PORT', '3000'));
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import { UPLOAD_DIR } from './constants/swagger.js';
 
 const setupServer = () => {
   const app = express();
@@ -18,7 +20,7 @@ const setupServer = () => {
   );
 
   app.use(cors());
-  app.use(cookieParser())
+  app.use(cookieParser());
   app.use(
     pino({
       transport: {
@@ -34,10 +36,12 @@ const setupServer = () => {
     });
   });
 
-  app.use(router)
+  app.use(router);
+
+  app.use('/uploads', express.static(UPLOAD_DIR));
+  app.use('/api-docs', swaggerDocs());
 
   app.use(notFoundHandler);
-
   app.use(errorHandler);
 
   app.listen(PORT, () => {
