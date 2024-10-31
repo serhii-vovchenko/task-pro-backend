@@ -8,6 +8,7 @@ import router from './routers/index.js';
 import cookieParser from 'cookie-parser';
 const PORT = Number(env('PORT', '3000'));
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
+import { UPLOAD_DIR } from './constants/swagger.js';
 
 const setupServer = () => {
   const app = express();
@@ -37,11 +38,11 @@ const setupServer = () => {
 
   app.use(router);
 
-  app.use(notFoundHandler);
-
-  app.use(errorHandler);
   app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/api-docs', swaggerDocs());
+
+  app.use(notFoundHandler);
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Server is running on PORT ${PORT}`);
