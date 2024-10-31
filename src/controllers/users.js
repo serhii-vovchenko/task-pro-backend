@@ -1,4 +1,5 @@
 import createHttpError from 'http-errors';
+import bcrypt from 'bcrypt';
 import { getUserById, patchUser } from '../services/users.js';
 import { saveFileToCloudinary } from '../utils/saveFileToСloudinary.js';
 
@@ -22,7 +23,15 @@ export const patchUserThemeController = async (req, res, next) => {
 
 export const patchUserController = async (req, res) => {
   const photoUrl = req.file && (await saveFileToCloudinary(req.file));
-  const user = await patchUser({ ...req.body, photoUrl }, req.user._id);
+  const password = req.body.password;
+  let payload;
+  if (password) {
+    const encryptedPwd = await bcrypt.hash(password, 10);
+    payload = { ...req.body, password: encryptedPwd, photoUrl };
+  } else {
+    payload = { ...req.body, photoUrl };
+  }
+  const user = await patchUser(payload, req.user._id);
   res.json({
     data: user,
   });

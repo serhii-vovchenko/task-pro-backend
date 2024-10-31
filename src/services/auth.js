@@ -1,45 +1,44 @@
-import createHttpError from "http-errors"
-import { UsersCollection } from "../db/models/user.js"
-import bcrypt from "bcrypt"
-import {SessionsCollection} from "../db/models/session.js"
-import { randomBytes } from "crypto"
-import { THIRTY_DAYS, TWO_HOURS } from "../constants/auth.js"
+import createHttpError from 'http-errors';
+import { UsersCollection } from '../db/models/user.js';
+import bcrypt from 'bcrypt';
+import { SessionsCollection } from '../db/models/session.js';
+import { randomBytes } from 'crypto';
+import { THIRTY_DAYS, TWO_HOURS } from '../constants/auth.js';
 
-export const registerUser = async (registrationData) => {
-    const user = await UsersCollection.findOne({ email: registrationData.email })
-    
-    if (user) throw createHttpError(409, "Email in use")
+export const registerUser = async registrationData => {
+  const user = await UsersCollection.findOne({ email: registrationData.email });
 
-    const encryptedPwd = await bcrypt.hash(registrationData.password, 10)
+  if (user) throw createHttpError(409, 'Email in use');
 
-    return await UsersCollection.create({
-        ...registrationData,
-        password: encryptedPwd
-    })
-}
+  const encryptedPwd = await bcrypt.hash(registrationData.password, 10);
 
+  return await UsersCollection.create({
+    ...registrationData,
+    password: encryptedPwd,
+  });
+};
 
-export const loginUser = async (loginData) => {
-    const user = await UsersCollection.findOne({ email: loginData.email })
-    if (!user) throw createHttpError(401, "User not found")
+export const loginUser = async loginData => {
+  const user = await UsersCollection.findOne({ email: loginData.email });
+  if (!user) throw createHttpError(401, 'User not found');
 
-    const isEqual = bcrypt.compare(loginData.password, user.password)
-    if (!isEqual) throw createHttpError(401, "Unauthorized!")
+  const isEqual = await bcrypt.compare(loginData.password, user.password);
+  if (!isEqual) throw createHttpError(401, 'Unauthorized!');
 
-    await SessionsCollection.deleteOne({ userId: user.id })
-    
-    const accessToken = randomBytes(30).toString('base64')
-    const refreshToken = randomBytes(30).toString('base64')
+  await SessionsCollection.deleteOne({ userId: user.id });
 
-    return await SessionsCollection.create({
-        userId: user.id,
-        accessToken,
-        refreshToken,
-        accessTokenValidUntil: new Date(Date.now() + TWO_HOURS),
-        refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS)
-    })
-}
+  const accessToken = randomBytes(30).toString('base64');
+  const refreshToken = randomBytes(30).toString('base64');
 
-export const logoutUser = async (sessionId) => {
-    await SessionsCollection.deleteOne({_id: sessionId})
-}
+  return await SessionsCollection.create({
+    userId: user.id,
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil: new Date(Date.now() + TWO_HOURS),
+    refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
+  });
+};
+
+export const logoutUser = async sessionId => {
+  await SessionsCollection.deleteOne({ _id: sessionId });
+};
