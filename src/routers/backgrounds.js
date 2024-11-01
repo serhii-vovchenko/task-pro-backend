@@ -2,9 +2,12 @@ import multer from 'multer';
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { addBackgroundsController } from '../controllers/backgrounds.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const backgroundsRouter = Router();
 const upload = multer();
+
+backgroundsRouter.use('/', authenticate);
 
 backgroundsRouter.post(
   '/upload',
