@@ -14,25 +14,343 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://example.com/api/v1"
+      "url": "task-pro-backend-mcfs.onrender.com"
     }
   ],
   "tags": [
     {
       "name": "Task",
-      "description": "Operations about users."
+      "description": "Operations about tasks."
     },
     {
       "name": "Auth",
       "description": "Auth operations."
     }
   ],
-  "paths": {},
+  "paths": {
+    "/tasks": {
+      "get": {
+        "tags": ["Task"],
+        "summary": "Get list of tasks",
+        "operationId": "getTasks",
+        "description": "Retrieve a list of tasks",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": { "type": "integer" },
+            "example": 1
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": { "type": "integer" },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found tasks!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 200 },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found tasks!"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Task" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/401" },
+          "500": { "$ref": "#/components/responses/500" }
+        }
+      },
+      "post": {
+        "tags": ["Task"],
+        "summary": "Create a new task",
+        "operationId": "createTask",
+        "description": "Create a task with payload",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string", "example": "New Task" },
+                  "description": {
+                    "type": "string",
+                    "example": "Description of the task"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["pending", "completed"],
+                    "example": "pending"
+                  }
+                },
+                "required": ["title", "status"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 201 },
+                    "message": {
+                      "type": "string",
+                      "example": "Task created successfully"
+                    },
+                    "data": { "$ref": "#/components/schemas/Task" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/401" },
+          "500": { "$ref": "#/components/responses/500" }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "tags": ["Task"],
+        "summary": "Get a task by ID",
+        "operationId": "getTaskById",
+        "description": "Retrieve a specific task by its ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 200 },
+                    "message": {
+                      "type": "string",
+                      "example": "Task retrieved successfully"
+                    },
+                    "data": { "$ref": "#/components/schemas/Task" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 404 },
+                    "message": { "type": "string", "example": "Task not found" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/401" },
+          "500": { "$ref": "#/components/responses/500" }
+        }
+      },
+      "delete": {
+        "tags": ["Task"],
+        "summary": "Delete a task by ID",
+        "operationId": "deleteTaskById",
+        "description": "Delete a specific task by its ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted the task"
+          },
+          "404": {
+            "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 404 },
+                    "message": { "type": "string", "example": "Task not found" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/401" },
+          "500": { "$ref": "#/components/responses/500" }
+        }
+      },
+      "patch": {
+        "tags": ["Task"],
+        "summary": "Update a task by ID",
+        "operationId": "updateTaskById",
+        "description": "Update a task by its ID with the provided fields",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string", "example": "Updated Task" },
+                  "description": {
+                    "type": "string",
+                    "example": "Updated description of the task"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["pending", "completed"],
+                    "example": "completed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 200 },
+                    "message": {
+                      "type": "string",
+                      "example": "Task updated successfully"
+                    },
+                    "data": { "$ref": "#/components/schemas/Task" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "integer", "example": 404 },
+                    "message": { "type": "string", "example": "Task not found" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/401" },
+          "500": { "$ref": "#/components/responses/500" }
+        }
+      }
+    }
+  },
   "components": {
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "example": "5f8d04f5e3745e001f8d07f4" },
+          "title": { "type": "string", "example": "Task title" },
+          "description": { "type": "string", "example": "Task description" },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "completed"],
+            "example": "pending"
+          },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        },
+        "required": ["title", "status"]
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": { "type": "integer", "example": 401 },
+                "message": { "type": "string", "example": "Unauthorized" }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": { "type": "integer", "example": 500 },
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
