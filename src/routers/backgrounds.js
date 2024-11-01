@@ -17,5 +17,3 @@ backgroundsRouter.post(
   ]),
   ctrlWrapper(addBackgroundsController),
 );
-
-// export default backgroundsRouter;
