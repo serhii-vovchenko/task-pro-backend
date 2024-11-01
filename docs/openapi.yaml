@@ -36,15 +36,15 @@ paths:
   /auth/logout:
     post:
       $ref: ../swagger/paths/auth/logout.yaml
-  /user/current:
+  /users/current:
     get:
-      $ref: ../swagger/paths/user/current.yaml
-  /user/theme:
+      $ref: ../swagger/paths/users/current.yaml
+  /users/theme:
     patch:
-      $ref: ../swagger/paths/user/theme.yaml
-  /user/edit:
+      $ref: ../swagger/paths/users/theme.yaml
+  /users/edit:
     patch:
-      $ref: ../swagger/paths/user/edit.yaml
+      $ref: ../swagger/paths/users/edit.yaml
 components:
   securitySchemes:
     bearerAuth:
