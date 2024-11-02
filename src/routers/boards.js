@@ -1,12 +1,37 @@
 import { Router } from 'express';
-import { authenticate } from '../middlewares/authenticate';
-import { ctrlWrapper } from '../utils/ctrlWrapper';
-import { getAllBoardsController } from '../controllers/boards';
+import { authenticate } from '../middlewares/authenticate.js';
+import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import {
+  addBoardController,
+  deleteBoardByIdController,
+  getAllBoardsController,
+  getBoardByIdController,
+  updateBoardController,
+} from '../controllers/boards.js';
+import { validateBody } from '../utils/validateBody.js';
+import { createBoardSchema, updateBoardSchema } from '../validation/board.js';
+import { isValid } from '../middlewares/isValid.js';
 
-const bordersRouter = Router();
+const boardsRouter = Router();
 
-bordersRouter.use('/', authenticate);
+boardsRouter.use('/', authenticate);
+boardsRouter.use('/:boardId', isValid('boardId'));
 
-bordersRouter.get('/', ctrlWrapper(getAllBoardsController));
+boardsRouter.get('/', ctrlWrapper(getAllBoardsController));
+boardsRouter.get('/:boardId', ctrlWrapper(getBoardByIdController));
 
-export default bordersRouter;
+boardsRouter.post(
+  '/',
+  validateBody(createBoardSchema),
+  ctrlWrapper(addBoardController),
+);
+
+boardsRouter.patch(
+  '/:boardId',
+  validateBody(updateBoardSchema),
+  ctrlWrapper(updateBoardController),
+);
+
+boardsRouter.delete('/:boardId', ctrlWrapper(deleteBoardByIdController));
+
+export default boardsRouter;

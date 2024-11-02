@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { backgraundsBorderSchema } from './backgrounds.js';
 
 const BoardSchema = new Schema(
   {
@@ -16,9 +17,9 @@ const BoardSchema = new Schema(
         required: true,
       },
     },
-    background: {
-      name: String,
-      backgroundUrl: String,
+    backgrounds: {
+      type: backgraundsBorderSchema,
+      default: null,
     },
     isActive: {
       type: Boolean,
