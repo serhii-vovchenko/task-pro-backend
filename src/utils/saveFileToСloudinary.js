@@ -9,10 +9,17 @@ cloudinary.v2.config({
   api_secret: env(CLOUDINARY.API_SECRET),
 });
 
-export const saveFileToCloudinary = async file => {
+export const saveFileToCloudinary = async (file, folderName = '') => {
   return new Promise((resolve, reject) => {
+    const uploadOptions = {
+      resource_type: 'image',
+    };
+
+    if (folderName) {
+      uploadOptions.folder = folderName;
+    }
     const stream = cloudinary.v2.uploader.upload_stream(
-      { resource_type: 'image' },
+      uploadOptions,
       (error, result) => {
         if (error) return reject(error);
         resolve(result.secure_url);
