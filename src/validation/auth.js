@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export const registrationUserSchema = Joi.object({
-  name: Joi.string().min(3).max(30).required().messages({
+  name: Joi.string().min(2).max(32).required().messages({
     'any.required': 'Name is required.',
     'string.empty': 'Name cannot be empty.',
     'string.min': 'Name should be at least 3 characters long.',
@@ -41,7 +41,7 @@ export const updateThemeSchema = Joi.object({
 });
 
 export const updateUserSchema = Joi.object({
-  name: Joi.string().min(3).max(30).messages({
+  name: Joi.string().min(2).max(32).messages({
     'string.empty': 'Name cannot be empty.',
     'string.min': 'Name should be at least 3 characters long.',
     'string.max': 'Name should not exceed 30 characters.',
