@@ -12,7 +12,7 @@ export const registrationUserSchema = Joi.object({
     'string.empty': 'Email cannot be empty.',
     'string.email': 'Invalid email format.',
   }),
-  password: Joi.string().min(6).required().messages({
+  password: Joi.string().min(8).max(64).required().messages({
     'any.required': 'Password is required.',
     'string.empty': 'Password cannot be empty.',
   }),
@@ -50,7 +50,7 @@ export const updateUserSchema = Joi.object({
     'string.empty': 'Email cannot be empty.',
     'string.email': 'Invalid email format.',
   }),
-  password: Joi.string().min(6).messages({
+  password: Joi.string().min(8).max(64).messages({
     'string.empty': 'Password cannot be empty.',
   }),
   photoUrl: Joi.any(),

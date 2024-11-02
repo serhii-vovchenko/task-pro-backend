@@ -17,14 +17,15 @@ requestBody:
           name:
             type: string
             minLength: 3
-            maxLength: 30
+            maxLength: 32
             example: 'John'
           email:
             type: string
             example: 'john@gmail.com'
           password:
             type: string
-            minLength: 6
+            minLength: 8
+            maxLength: 64
             example: 'examplepwd'
 responses:
   '201':
