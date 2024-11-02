@@ -7,8 +7,9 @@ import {
 
 export const createColumnController = async (req, res) => {
   const { title } = req.body;
+  const { _id: userId } = req.user;
 
-  const column = await createColumn({ title });
+  const column = await createColumn({ title, userId });
 
   res.status(201).json({
     status: 201,
@@ -18,10 +19,11 @@ export const createColumnController = async (req, res) => {
 };
 
 export const updateColumnController = async (req, res, next) => {
+  const { _id: userId } = req.user;
   const { title } = req.body;
   const { columnId } = req.params;
 
-  const updatedColumn = await updateColumn(columnId, {
+  const updatedColumn = await updateColumn(columnId, userId, {
     title,
   });
 
@@ -37,9 +39,10 @@ export const updateColumnController = async (req, res, next) => {
 };
 
 export const deleteColumnController = async (req, res, next) => {
+  const { _id: userId } = req.user;
   const { columnId } = req.params;
 
-  const column = await deleteColumn(columnId);
+  const column = await deleteColumn(columnId, userId);
 
   if (!column) {
     return next(createHttpError(404, 'Column not found or unauthorized'));

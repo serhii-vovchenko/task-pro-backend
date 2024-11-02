@@ -5,10 +5,11 @@ export const createColumn = async payload => {
   return newColumn;
 };
 
-export const updateColumn = async (columnId, payload) => {
+export const updateColumn = async (columnId, userId, payload) => {
   const updatedColumn = await ColumnsCollection.findOneAndUpdate(
     {
       _id: columnId,
+      userId,
     },
     payload,
     {
@@ -23,9 +24,10 @@ export const updateColumn = async (columnId, payload) => {
   return updatedColumn;
 };
 
-export const deleteColumn = async columnId => {
+export const deleteColumn = async (columnId, userId) => {
   const deletedColumn = await ColumnsCollection.findOneAndDelete({
     _id: columnId,
+    userId,
   });
 
   return deletedColumn;
