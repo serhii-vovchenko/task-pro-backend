@@ -5,6 +5,7 @@ import {
   addBoardController,
   deleteBoardByIdController,
   getAllBoardsController,
+  getBackgroundsAndIconsController,
   getBoardByIdAndMakeBoardActiveController,
   updateBoardController,
 } from '../controllers/boards.js';
@@ -19,6 +20,9 @@ import { isValid } from '../middlewares/isValid.js';
 const boardsRouter = Router();
 
 boardsRouter.use('/', authenticate);
+
+boardsRouter.get('/info', ctrlWrapper(getBackgroundsAndIconsController));
+
 boardsRouter.use('/:boardId', isValid('boardId'));
 
 boardsRouter.get('/', ctrlWrapper(getAllBoardsController));

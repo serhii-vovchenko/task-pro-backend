@@ -3,6 +3,7 @@ import {
   addBoard,
   deleteBoard,
   getAllBoards,
+  getBackgroundsAndIcons,
   getBoardByIdAndMakeBoardActive,
   updateBoard,
 } from '../services/boards.js';
@@ -63,4 +64,13 @@ export const deleteBoardByIdController = async (req, res, next) => {
   const board = await deleteBoard(boardId, userId);
   if (!board) return next(createHttpError(404, 'Board not found'));
   res.status(204).send();
+};
+
+export const getBackgroundsAndIconsController = async (req, res) => {
+  const boardDetails = await getBackgroundsAndIcons();
+  res.json({
+    status: 200,
+    message: 'Successfully found icons and backgrounds',
+    data: boardDetails,
+  });
 };

@@ -2,6 +2,7 @@ import createHttpError from 'http-errors';
 import { BoardsCollection } from '../db/models/board.js';
 import { IconsCollection } from '../db/models/icons.js';
 import { BackgroundCollection } from '../db/models/backgrounds.js';
+import { sortNumberInStr } from '../utils/sortNumberInStr.js';
 
 export const getAllBoards = async userId => {
   return await BoardsCollection.find({ userId });
@@ -125,4 +126,18 @@ export const deleteBoard = async (boardId, userId) => {
     userId,
   });
   return board;
+};
+
+export const getBackgroundsAndIcons = async () => {
+  const icons = await IconsCollection.find();
+  if (!icons) return createHttpError(404, 'Icons not found');
+  sortNumberInStr(icons);
+
+  const backgrounds = await BackgroundCollection.find();
+  if (!backgrounds) return createHttpError(404, 'Backgrounds not found');
+  sortNumberInStr(backgrounds);
+  return {
+    icons,
+    backgrounds,
+  };
 };
