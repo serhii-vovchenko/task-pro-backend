@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 const userSchema = new Schema(
   {
@@ -23,6 +23,13 @@ const userSchema = new Schema(
       type: String,
       enum: ['dark', 'light', 'violet'],
       default: 'dark',
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      unique: true,
+      default: function () {
+        return this._id;
+      },
     },
   },
   {
