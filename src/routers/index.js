@@ -11,6 +11,6 @@ router.use('/auth', authRouter);
 router.use('/users', userRouter);
 router.use('/boards', boardsRouter);
 router.use('/columns', columnsRouter);
-router.use('/support', helpMailRouter);
+router.use('/', helpMailRouter);
 
 export default router;
