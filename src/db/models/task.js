@@ -20,6 +20,8 @@ const taskSchema = new Schema(
       type: Date,
       required: true,
     },
+    columnId: { type: Schema.Types.ObjectId, ref: 'columns' },
+    userId: { type: Schema.Types.ObjectId, ref: 'users' },
   },
   {
     timestamps: true,

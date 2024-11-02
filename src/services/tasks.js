@@ -5,10 +5,11 @@ export const createTask = async payload => {
   return newTask;
 };
 
-export const updateTask = async (taskId, payload) => {
+export const updateTask = async (taskId, userId, payload) => {
   const updatedTask = await TasksCollection.findOneAndUpdate(
     {
       _id: taskId,
+      userId,
     },
     payload,
     {
@@ -20,30 +21,25 @@ export const updateTask = async (taskId, payload) => {
   return updatedTask;
 };
 
-export const deleteTask = async taskId => {
+export const deleteTask = async (taskId, userId) => {
   const deletedTask = await TasksCollection.findOneAndDelete({
     _id: taskId,
+    userId,
   });
 
   return deletedTask;
 };
 
-// export const moveTask = async (taskId, newColumnId) => {
-//   const task = await TasksCollection.findById(taskId);
-//   if (!task) throw new Error('Task not found');
+export const moveTask = async (taskId, userId, newColumnId) => {
+  const movedTask = await TasksCollection.findOneAndUpdate(
+    { _id: taskId, userId },
+    { columnId: newColumnId },
+    { new: true },
+  );
 
-//   const movedTask = await TasksCollection.findByIdAndUpdate(
-//     taskId,
-//     { columnId: newColumnId },
-//     { new: true },
-//   );
+  if (!movedTask) {
+    throw new Error('Task not found');
+  }
 
-//   await ColumnsCollection.findByIdAndUpdate(task.columnId, {
-//     $pull: { tasks: taskId },
-//   });
-//   await ColumnsCollection.findByIdAndUpdate(newColumnId, {
-//     $push: { tasks: taskId },
-//   });
-
-//   return movedTask;
-// };
+  return movedTask;
+};
