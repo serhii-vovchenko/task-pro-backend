@@ -11,6 +11,8 @@ tags:
     description: Operations about users.
   - name: Auth
     description: Auth operations.
+  - name: Help
+    description: Send email to support.
 servers:
   - url: http://localhost:3000
   - url: task-pro-backend-mcfs.onrender.com
@@ -45,6 +47,9 @@ paths:
   /users/edit:
     patch:
       $ref: ../swagger/paths/users/edit.yaml
+  /help:
+    post:
+      $ref: ../swagger/paths/help/help.yaml
 components:
   securitySchemes:
     bearerAuth:
