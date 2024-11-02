@@ -3,11 +3,13 @@ import authRouter from './auth.js';
 import userRouter from './user.js';
 import columnsRouter from './columns.js';
 import helpMailRouter from './help.js';
+import boardsRouter from './boards.js';
 
 const router = Router();
 
 router.use('/auth', authRouter);
-router.use('/user', userRouter);
+router.use('/users', userRouter);
+router.use('/boards', boardsRouter);
 router.use('/columns', columnsRouter);
 router.use('/support', helpMailRouter);
 
