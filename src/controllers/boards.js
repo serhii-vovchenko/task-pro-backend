@@ -3,7 +3,7 @@ import {
   addBoard,
   deleteBoard,
   getAllBoards,
-  getBoardById,
+  getBoardByIdAndMakeBoardActive,
   updateBoard,
 } from '../services/boards.js';
 
@@ -16,9 +16,19 @@ export const getAllBoardsController = async (req, res) => {
   });
 };
 
-export const getBoardByIdController = async (req, res, next) => {
+export const getBoardByIdAndMakeBoardActiveController = async (
+  req,
+  res,
+  next,
+) => {
   const { boardId } = req.params;
-  const board = await getBoardById(boardId, req.user._id);
+  const { previous_boardId } = req.body;
+  const userId = req.user._id;
+  const board = await getBoardByIdAndMakeBoardActive({
+    boardId,
+    previous_boardId,
+    userId,
+  });
   if (!board) return next(createHttpError(404, 'Board not found'));
   res.json({
     status: 200,

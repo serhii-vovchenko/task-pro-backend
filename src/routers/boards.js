@@ -5,11 +5,15 @@ import {
   addBoardController,
   deleteBoardByIdController,
   getAllBoardsController,
-  getBoardByIdController,
+  getBoardByIdAndMakeBoardActiveController,
   updateBoardController,
 } from '../controllers/boards.js';
 import { validateBody } from '../utils/validateBody.js';
-import { createBoardSchema, updateBoardSchema } from '../validation/board.js';
+import {
+  createBoardSchema,
+  updateActiveBoardSchema,
+  updateBoardSchema,
+} from '../validation/board.js';
 import { isValid } from '../middlewares/isValid.js';
 
 const boardsRouter = Router();
@@ -18,7 +22,11 @@ boardsRouter.use('/', authenticate);
 boardsRouter.use('/:boardId', isValid('boardId'));
 
 boardsRouter.get('/', ctrlWrapper(getAllBoardsController));
-boardsRouter.get('/:boardId', ctrlWrapper(getBoardByIdController));
+boardsRouter.get(
+  '/:boardId',
+  validateBody(updateActiveBoardSchema),
+  ctrlWrapper(getBoardByIdAndMakeBoardActiveController),
+);
 
 boardsRouter.post(
   '/',

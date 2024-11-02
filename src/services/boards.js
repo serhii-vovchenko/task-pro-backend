@@ -7,8 +7,36 @@ export const getAllBoards = async userId => {
   return await BoardsCollection.find({ userId });
 };
 
-export const getBoardById = async (boardId, userId) => {
-  return await BoardsCollection.findOne({ _id: boardId, userId });
+export const getBoardByIdAndMakeBoardActive = async ({
+  boardId,
+  previous_boardId,
+  userId,
+}) => {
+  let isActive = false;
+
+  if (!previous_boardId) {
+    await BoardsCollection.updateMany({ userId }, { isActive: false });
+  } else {
+    await BoardsCollection.findOneAndUpdate(
+      { _id: previous_boardId, userId },
+      { isActive },
+    );
+  }
+  isActive = true;
+  const rawData = await BoardsCollection.findOneAndUpdate(
+    { _id: boardId, userId },
+    { isActive },
+    {
+      includeResultMetadata: true,
+      new: true,
+    },
+  );
+
+  if (!rawData || !rawData.value) return null;
+
+  return {
+    board: rawData.value,
+  };
 };
 
 export const addBoard = async ({
