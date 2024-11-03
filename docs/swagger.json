@@ -14,12 +14,12 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "task-pro-backend-mcfs.onrender.com"
+      "url": "https://task-pro-backend-mcfs.onrender.com"
     }
   ],
   "tags": [
     {
-      "name": "Task",
+      "name": "Tasks",
       "description": "Operations about users."
     },
     {
@@ -27,8 +27,16 @@
       "description": "Auth operations."
     },
     {
+      "name": "Users",
+      "description": "update user details and theme of app."
+    },
+    {
       "name": "Help",
       "description": "Send email to support."
+    },
+    {
+      "name": "Boards",
+      "description": "add, remove and update board for the authenticated user."
     }
   ],
   "paths": {
@@ -1328,7 +1336,7 @@
                       "properties": {
                         "_id": {
                           "type": "string",
-                          "example": "board ID (24 characters)"
+                          "example": "608d1c2e1f1b2c001c8e4d6c"
                         },
                         "title": {
                           "type": "string",
@@ -1863,7 +1871,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "board ID (24 characters)"
+              "example": "6727724a5d8f0e17df1b4744"
             },
             "description": "Unique identifier of the board to be deleted"
           }
