@@ -8,6 +8,10 @@ export const getAllBoards = async userId => {
   return await BoardsCollection.find({ userId });
 };
 
+export const getBoardById = async (boardId, userId) => {
+  return await BoardsCollection.findOne({ _id: boardId, userId });
+};
+
 export const getBoardByIdAndMakeBoardActive = async ({
   boardId,
   previous_boardId,
