@@ -1,0 +1,131 @@
+tags:
+  - Boards
+summary: Get Board by ID and Set as Active
+operationId: getBoardByIdAndMakeActive
+description: |
+  Retrieves a board by its ID and sets it as the active board for the user.
+  If a `previous_boardId` is provided in the request body, it will be deactivated; 
+  if not, all boards of the user will be deactivated.
+security:
+  - bearerAuth: []
+parameters:
+  - name: boardId
+    in: path
+    required: true
+    schema:
+      type: string
+      example: '6727724a5d8f0e17df1b4744'
+    description: Unique identifier of the board
+requestBody:
+  required: false
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          previous_boardId:
+            type: string
+            nullable: true
+            description: |
+              ID of the previously active board to deactivate. 
+              If not provided, all boards will be set to inactive.
+            example: '672770145d8f0e17df1b4743'
+responses:
+  '200':
+    description: Successfully retrieved board and set it as active
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example:
+                Successfully found board with id 6727724a5d8f0e17df1b4744!
+            data:
+              type: object
+              required:
+                - _id
+                - title
+                - isActive
+                - icon
+                - backgrounds
+                - userId
+                - createdAt
+                - updatedAt
+                - columns
+              properties:
+                _id:
+                  type: string
+                  description: Unique identifier of the board
+                  example: '6727724a5d8f0e17df1b4744'
+                title:
+                  type: string
+                  description: Name of the board
+                  example: 'My project'
+                isActive:
+                  type: boolean
+                  description:
+                    Indicates if this board is the currently active board
+                  example: true
+                icon:
+                  type: object
+                  required:
+                    - name
+                    - iconUrl
+                  properties:
+                    name:
+                      type: string
+                      example: '7_icon-colors'
+                      description: Name of the icon
+                    iconUrl:
+                      type: string
+                      format: uri
+                      example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730495494/icons/uppg1b3rn1rywf2rb4tj.svg'
+                      description: URL of the icon image
+                backgrounds:
+                  type: object
+                  nullable: true
+                  required:
+                    - name
+                    - resolution
+                    - modalUrl
+                  properties:
+                    name:
+                      type: string
+                      example: 'bg-5'
+                      description: Background name
+                    modalUrl:
+                      type: string
+                      format: uri
+                      example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730468437/backgrounds/iwukdnoq2mzvx8kiufeq.png'
+                      description: URL of the background image for modal
+                    resolution:
+                      type: object
+                      properties:
+                        mobile:
+                          type: string
+                          format: uri
+                          example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730468438/backgrounds/wcplwlzm7zgvjkxyvzt2.jpg'
+                        tablet:
+                          type: string
+                          format: uri
+                          example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730468438/backgrounds/j9gpdsf7l9yncc5vu3kb.jpg'
+                        desktop:
+                          type: string
+                          format: uri
+                          example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730468439/backgrounds/s8jm1yle23vq2rveusy7.jpg'
+                userId:
+                  type: string
+                  description: User ID of the board owner
+                  example: '6725640c5fee756b11a307db'
+                createdAt:
+                  type: string
+                  format: date-time

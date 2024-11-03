@@ -1,0 +1,139 @@
+tags:
+  - Boards
+summary: Create a new board
+operationId: createBoard
+description: 'Create a new board for the authenticated user.'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - title
+          - iconName
+        properties:
+          title:
+            type: string
+            description: 'The title of the board'
+            example: 'New Project Board'
+          iconName:
+            type: string
+            description:
+              'The icon name for the board. Must be one of the predefined
+              values.'
+            enum:
+              [
+                '1_icon-project',
+                '2_icon-star',
+                '3_icon-loading',
+                '4_icon-puzzle-piece',
+                '5_icon-container',
+                '6_icon-lightning',
+                '7_icon-colors',
+                '8_icon-hexagon',
+              ]
+            example: '2_icon-star'
+          backgroundName:
+            type: string
+            description:
+              'The background name for the board. Must be one of the predefined
+              values.'
+            enum:
+              [
+                'bg-1',
+                'bg-2',
+                'bg-3',
+                'bg-4',
+                'bg-5',
+                'bg-6',
+                'bg-7',
+                'bg-8',
+                'bg-9',
+                'bg-10',
+                'bg-11',
+                'bg-12',
+                'bg-13',
+                'bg-14',
+                'bg-15',
+              ]
+            example: 'bg-3'
+responses:
+  '200':
+    description: 'Successfully created a new board'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully created a board'
+            data:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  example: '608d1c2e1f1b2c001c8e4d6c'
+                title:
+                  type: string
+                  example: 'New Project Board'
+                icon:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: '2_icon-star'
+                    iconUrl:
+                      type: string
+                      format: uri
+                      example: 'https://example.com/icons/2_icon-star.png'
+                backgrounds:
+                  type: object
+                  nullable: true
+                  properties:
+                    name:
+                      type: string
+                      example: 'bg-3'
+                    modalUrl:
+                      type: string
+                      format: uri
+                      example: 'https://example.com/backgrounds/bg-3.jpg'
+                    resolution:
+                      type: object
+                      properties:
+                        mobile:
+                          type: string
+                          format: uri
+                          example: 'https://example.com/backgrounds/bg-3_mobile.jpg'
+                        tablet:
+                          type: string
+                          format: uri
+                          example: 'https://example.com/backgrounds/bg-3_tablet.jpg'
+                        desktop:
+                          type: string
+                          format: uri
+                          example: 'https://example.com/backgrounds/bg-3_desktop.jpg'
+  '400':
+    description: 'Bad Request - Missing or invalid parameters'
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Invalid request parameters'
+  '401':
+    $ref: '../../components/responses/401.yaml'
