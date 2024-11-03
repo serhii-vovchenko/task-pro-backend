@@ -7,15 +7,19 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is a documentation of task app
 tags:
-  - name: Task
+  - name: Tasks
     description: Operations about users.
   - name: Auth
     description: Auth operations.
+  - name: Users
+    description: update user details and theme of app.
   - name: Help
     description: Send email to support.
+  - name: Boards
+    description: add, remove and update board for the authenticated user.
 servers:
   - url: http://localhost:3000
-  - url: task-pro-backend-mcfs.onrender.com
+  - url: https://task-pro-backend-mcfs.onrender.com
 paths:
   /task:
     get:
