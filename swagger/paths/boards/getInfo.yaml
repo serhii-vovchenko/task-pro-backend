@@ -1,0 +1,90 @@
+tags:
+  - Boards
+summary: Retrieve Icons and Backgrounds
+operationId: getBackgroundsAndIcons
+description: |
+  Retrieves a list of available icons and backgrounds for the boards. 
+  Returns the details including their IDs, names, and URLs.
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Successfully retrieved icons and backgrounds
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully found icons and backgrounds'
+            data:
+              type: object
+              required:
+                - icons
+                - backgrounds
+              properties:
+                icons:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - _id
+                      - name
+                      - iconUrl
+                    properties:
+                      _id:
+                        type: string
+                        description: Unique identifier for the icon
+                        example: '672543634967d1183bbad202'
+                      name:
+                        type: string
+                        description: Name of the icon
+                        example: '1_icon-project'
+                      iconUrl:
+                        type: string
+                        format: uri
+                        description: URL of the icon image
+                        example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730495328/icons/exet0qmduhppm344sh5x.svg'
+                backgrounds:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - _id
+                      - name
+                      - modalUrl
+                    properties:
+                      _id:
+                        type: string
+                        description: Unique identifier for the background
+                        example: '6724dc14e9a3f1f8b9746b3b'
+                      name:
+                        type: string
+                        description: Name of the background
+                        example: 'bg-1'
+                      modalUrl:
+                        type: string
+                        format: uri
+                        description: URL of the background image for modal
+                        example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730468881/backgrounds/nbxdi3fvgb6rjhp9uxca.png'
+  '404':
+    description: Icons or backgrounds not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'Icons not found'

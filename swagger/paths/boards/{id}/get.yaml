@@ -29,7 +29,7 @@ requestBody:
             description: |
               ID of the previously active board to deactivate. 
               If not provided, all boards will be set to inactive.
-            example: '672770145d8f0e17df1b4743'
+            example: null
 responses:
   '200':
     description: Successfully retrieved board and set it as active
@@ -105,7 +105,7 @@ responses:
                     modalUrl:
                       type: string
                       format: uri
-                      example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730468437/backgrounds/iwukdnoq2mzvx8kiufeq.png'
+                      example: 'https://modal.png'
                       description: URL of the background image for modal
                     resolution:
                       type: object
@@ -113,15 +113,15 @@ responses:
                         mobile:
                           type: string
                           format: uri
-                          example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730468438/backgrounds/wcplwlzm7zgvjkxyvzt2.jpg'
+                          example: 'https://mobile.jpg'
                         tablet:
                           type: string
                           format: uri
-                          example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730468438/backgrounds/j9gpdsf7l9yncc5vu3kb.jpg'
+                          example: 'https://tablet.jpg'
                         desktop:
                           type: string
                           format: uri
-                          example: 'https://res.cloudinary.com/dxlahrm0m/image/upload/v1730468439/backgrounds/s8jm1yle23vq2rveusy7.jpg'
+                          example: 'https://desktop.jpg'
                 userId:
                   type: string
                   description: User ID of the board owner
@@ -129,3 +129,100 @@ responses:
                 createdAt:
                   type: string
                   format: date-time
+                  description: Date when the board was created
+                  example: '2024-11-03T12:53:30.939Z'
+                updatedAt:
+                  type: string
+                  format: date-time
+                  description: Date when the board was last updated
+                  example: '2024-11-03T16:35:40.317Z'
+                columns:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - _id
+                      - title
+                      - userId
+                      - boardId
+                      - createdAt
+                      - updatedAt
+                      - tasks
+                    properties:
+                      _id:
+                        type: string
+                        example: 'column Id (24 characters)'
+                        description: Unique identifier of the column
+                      title:
+                        type: string
+                        example: 'ToDo'
+                        description: Title of the column
+                      userId:
+                        type: string
+                        example: 'user ID (24 characters)'
+                        description: User ID of the column owner
+                      boardId:
+                        type: string
+                        example: 'board ID (24 characters)'
+                        description:
+                          ID of the board to which this column belongs
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: '2024-11-03T12:44:04.324Z'
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: '2024-11-03T12:44:04.324Z'
+                      tasks:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - _id
+                            - title
+                            - description
+                            - dueDate
+                            - priority
+                          properties:
+                            _id:
+                              type: string
+                              example: 'task ID (24 characters)'
+                              description: Unique identifier of the task
+                            title:
+                              type: string
+                              example: 'Complete project report'
+                              description: Title of the task
+                            description:
+                              type: string
+                              example:
+                                'Write and submit the project report by end of
+                                the week.'
+                              description: Description of the task
+                            dueDate:
+                              type: string
+                              format: date
+                              example: '2024-10-31'
+                              description: Due date for the task
+                            priority:
+                              type: string
+                              enum: ['low', 'medium', 'high']
+                              description: Priority level of the task
+                            status:
+                              type: string
+                              enum: ['not started', 'in progress', 'completed']
+                              description: Current status of the task
+                            assignedTo:
+                              type: string
+                              example: 'ID (24 characters)'
+                              description:
+                                ID of the user the task is assigned to
+                            createdAt:
+                              type: string
+                              format: date-time
+                              example: '2024-10-25T12:00:00Z'
+                              description: Date when the task was created
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

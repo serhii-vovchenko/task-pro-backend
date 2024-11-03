@@ -106,22 +106,22 @@ responses:
                     modalUrl:
                       type: string
                       format: uri
-                      example: 'https://example.com/backgrounds/bg-3.jpg'
+                      example: 'https://modal.png'
                     resolution:
                       type: object
                       properties:
                         mobile:
                           type: string
                           format: uri
-                          example: 'https://example.com/backgrounds/bg-3_mobile.jpg'
+                          example: 'https://mobile.jpg'
                         tablet:
                           type: string
                           format: uri
-                          example: 'https://example.com/backgrounds/bg-3_tablet.jpg'
+                          example: 'https://tablet.jpg'
                         desktop:
                           type: string
                           format: uri
-                          example: 'https://example.com/backgrounds/bg-3_desktop.jpg'
+                          example: 'https://desktop.jpg'
   '400':
     description: 'Bad Request - Missing or invalid parameters'
     content:

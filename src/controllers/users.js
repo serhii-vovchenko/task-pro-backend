@@ -4,7 +4,7 @@ import { getUserById, patchUser } from '../services/users.js';
 import { saveFileToCloudinary } from '../utils/saveFileToСloudinary.js';
 
 export const getCurrentUserController = async (req, res, next) => {
-  const user = await getUserById(req?.user?._id);
+  const user = await getUserById(req.user._id);
   if (!user) next(createHttpError(404, 'User not found'));
   res.json({
     status: 200,
