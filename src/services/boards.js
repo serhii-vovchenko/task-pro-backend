@@ -129,11 +129,13 @@ export const deleteBoard = async (boardId, userId) => {
 };
 
 export const getBackgroundsAndIcons = async () => {
-  const icons = await IconsCollection.find();
+  const icons = await IconsCollection.find().select('_id name iconUrl');
   if (!icons) return createHttpError(404, 'Icons not found');
   sortNumberInStr(icons);
 
-  const backgrounds = await BackgroundCollection.find();
+  const backgrounds = await BackgroundCollection.find().select(
+    '_id name modalUrl',
+  );
   if (!backgrounds) return createHttpError(404, 'Backgrounds not found');
   sortNumberInStr(backgrounds);
   return {
