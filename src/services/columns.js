@@ -27,7 +27,6 @@ export const createColumn = async payload => {
 };
 
 export const updateColumn = async (columnId, userId, boardId, payload) => {
-  console.log(payload);
   const updatedColumn = await ColumnsCollection.findOneAndUpdate(
     {
       _id: columnId,

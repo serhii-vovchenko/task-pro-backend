@@ -134,7 +134,6 @@ export const deleteBoard = async (boardId, userId) => {
   const columns = await getAllColumns(boardId, userId);
 
   columns.forEach(async column => {
-    console.log(`columnID ${column._id} deleted in task`);
     await TasksCollection.deleteMany({ columnId: column._id });
   });
 
