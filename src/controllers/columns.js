@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 import {
   createColumn,
-  deleteColumn,
+  deleteColumnAndTasks,
   getAllColumns,
   updateColumn,
 } from '../services/columns.js';
@@ -11,7 +11,7 @@ export const getColumnsController = async (req, res, next) => {
   if (!columns) return next(createHttpError(404, 'Columns not found'));
   res.json({
     status: 200,
-    message: 'Succsessfully found columns',
+    message: 'Successfully found columns',
     data: columns,
   });
 };
@@ -55,12 +55,12 @@ export const updateColumnController = async (req, res, next) => {
   });
 };
 
-export const deleteColumnController = async (req, res, next) => {
+export const deleteColumnAndTasksController = async (req, res, next) => {
   const { _id: userId } = req.user;
   const { columnId } = req.params;
   const { boardId } = req;
 
-  const column = await deleteColumn(columnId, userId, boardId);
+  const column = await deleteColumnAndTasks(columnId, userId, boardId);
 
   if (!column) {
     return next(createHttpError(404, 'Column not found or unauthorized'));

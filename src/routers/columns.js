@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   createColumnController,
-  deleteColumnController,
+  deleteColumnAndTasksController,
   getColumnsController,
   updateColumnController,
 } from '../controllers/columns.js';
@@ -37,6 +37,6 @@ columnsRouter.patch(
   validateBody(updateColumnSchema),
   ctrlWrapper(updateColumnController),
 );
-columnsRouter.delete('/:columnId', ctrlWrapper(deleteColumnController));
+columnsRouter.delete('/:columnId', ctrlWrapper(deleteColumnAndTasksController));
 
 export default columnsRouter;
