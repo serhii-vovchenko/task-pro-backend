@@ -4,6 +4,8 @@ import { IconsCollection } from '../db/models/icons.js';
 import { BackgroundCollection } from '../db/models/backgrounds.js';
 import { sortNumberInStr } from '../utils/sortNumberInStr.js';
 import { getAllColumns } from './columns.js';
+import { TasksCollection } from '../db/models/task.js';
+import { ColumnsCollection } from '../db/models/columns.js';
 
 export const getAllBoards = async userId => {
   return await BoardsCollection.find({ userId });
@@ -16,8 +18,8 @@ export const getBoardById = async (boardId, userId) => {
 
 export const getBoardByIdAndMakeBoardActive = async ({
   boardId,
-  previous_boardId,
   userId,
+  previous_boardId,
 }) => {
   let isActive = false;
 
@@ -129,6 +131,15 @@ export const updateBoard = async ({
 };
 
 export const deleteBoard = async (boardId, userId) => {
+  const columns = await getAllColumns(boardId, userId);
+
+  columns.forEach(async column => {
+    console.log(`columnID ${column._id} deleted in task`);
+    await TasksCollection.deleteMany({ columnId: column._id });
+  });
+
+  await ColumnsCollection.deleteMany({ boardId });
+
   const board = await BoardsCollection.findOneAndDelete({
     _id: boardId,
     userId,

@@ -48,6 +48,8 @@ export const updateColumn = async (columnId, userId, boardId, payload) => {
 };
 
 export const deleteColumn = async (columnId, userId, boardId) => {
+  await TasksCollection.deleteMany({ columnId });
+
   const deletedColumn = await ColumnsCollection.findOneAndDelete({
     _id: columnId,
     boardId,
