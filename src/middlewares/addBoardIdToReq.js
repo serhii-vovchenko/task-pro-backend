@@ -5,7 +5,7 @@ export const addBoardIdToReq = async (req, res, next) => {
     if (!req.params.boardId) {
       return next(createHttpError(400, 'Bad request. BoardId is missing'));
     }
-    req.body.boardId = req.params.boardId;
+    req.boardId = req.params.boardId;
     next();
   } catch (error) {
     next(error);

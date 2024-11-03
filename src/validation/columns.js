@@ -7,10 +7,6 @@ export const createColumnSchema = Joi.object({
     'string.min': 'Title name should be at least 3 characters long.',
     'string.max': 'Title name should not exceed 60 characters.',
   }),
-  boardId: Joi.string().required().messages({
-    'any.required': 'Board ID is required.',
-    'string.empty': 'Board ID cannot be empty.',
-  }),
 });
 
 export const updateColumnSchema = Joi.object({
@@ -18,8 +14,5 @@ export const updateColumnSchema = Joi.object({
     'string.empty': 'Title name cannot be empty.',
     'string.min': 'Title name should be at least 3 characters long.',
     'string.max': 'Title name should not exceed 60 characters.',
-  }),
-  boardId: Joi.string().messages({
-    'string.empty': 'Board ID cannot be empty.',
   }),
 });
