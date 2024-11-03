@@ -1,7 +1,21 @@
 import { TasksCollection } from '../db/models/task.js';
 
-export const createTask = async payload => {
-  const newTask = await TasksCollection.create(payload);
+export const createTask = async ({
+  title,
+  description,
+  priority,
+  deadline,
+  columnId,
+  userId,
+}) => {
+  const newTask = await TasksCollection.create({
+    title,
+    description,
+    priority,
+    deadline,
+    columnId,
+    userId,
+  });
   return newTask;
 };
 

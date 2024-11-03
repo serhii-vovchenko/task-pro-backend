@@ -8,22 +8,31 @@ import {
 
 export const createTaskController = async (req, res) => {
   const { title, description, priority, deadline } = req.body;
-  const { columnId } = req.params;
   const { _id: userId } = req.user;
+  const { columnId } = req;
 
   const task = await createTask({
     title,
     description,
     priority,
     deadline,
-    columnId,
     userId,
+    columnId,
   });
 
   res.status(201).json({
     status: 201,
     message: 'Successfully created a task!',
-    data: task,
+    data: {
+      task: {
+        id: task._id,
+        title: task.title,
+        description: task.description,
+        deadline: task.deadline,
+        userId,
+        columnId,
+      },
+    },
   });
 };
 
