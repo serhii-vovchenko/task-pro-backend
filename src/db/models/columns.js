@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const columnSchema = new Schema(
   {
@@ -7,12 +7,9 @@ const columnSchema = new Schema(
       required: true,
     },
     userId: { type: Schema.Types.ObjectId, ref: 'users' },
-    columnId: {
-      type: mongoose.Schema.Types.ObjectId,
-      unique: true,
-      default: function () {
-        return this._id;
-      },
+    boardId: {
+      type: Schema.Types.ObjectId,
+      ref: 'boards',
     },
   },
   {

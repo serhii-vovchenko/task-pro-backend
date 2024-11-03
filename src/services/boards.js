@@ -3,9 +3,15 @@ import { BoardsCollection } from '../db/models/board.js';
 import { IconsCollection } from '../db/models/icons.js';
 import { BackgroundCollection } from '../db/models/backgrounds.js';
 import { sortNumberInStr } from '../utils/sortNumberInStr.js';
+import { getAllColumns } from './columns.js';
 
 export const getAllBoards = async userId => {
   return await BoardsCollection.find({ userId });
+};
+
+export const getBoardById = async (boardId, userId) => {
+  const board = await BoardsCollection.findOne({ _id: boardId, userId });
+  return board;
 };
 
 export const getBoardByIdAndMakeBoardActive = async ({
@@ -35,9 +41,11 @@ export const getBoardByIdAndMakeBoardActive = async ({
 
   if (!rawData || !rawData.value) return null;
 
-  return {
-    board: rawData.value,
-  };
+  const board = rawData.value.toObject();
+  const columns = await getAllColumns(boardId, userId);
+  board.columns = columns?.length > 0 ? columns : [];
+
+  return board;
 };
 
 export const addBoard = async ({
@@ -129,11 +137,13 @@ export const deleteBoard = async (boardId, userId) => {
 };
 
 export const getBackgroundsAndIcons = async () => {
-  const icons = await IconsCollection.find();
+  const icons = await IconsCollection.find().select('_id name iconUrl');
   if (!icons) return createHttpError(404, 'Icons not found');
   sortNumberInStr(icons);
 
-  const backgrounds = await BackgroundCollection.find();
+  const backgrounds = await BackgroundCollection.find().select(
+    '_id name modalUrl',
+  );
   if (!backgrounds) return createHttpError(404, 'Backgrounds not found');
   sortNumberInStr(backgrounds);
   return {
