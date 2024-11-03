@@ -50,6 +50,19 @@ paths:
   /help:
     post:
       $ref: ../swagger/paths/help/help.yaml
+  /boards:
+    get:
+      $ref: ../swagger/paths/boards/get.yaml
+    post:
+      $ref: ../swagger/paths/boards/post.yaml
+  /boards/info:
+    get:
+      $ref: ../swagger/paths/boards/getInfo.yaml
+  /boards/{boardId}:
+    get:
+      $ref: ../swagger/paths/boards/{id}/get.yaml
+    delete:
+      $ref: ../swagger/paths/boards/{id}/delete.yaml
 components:
   securitySchemes:
     bearerAuth:

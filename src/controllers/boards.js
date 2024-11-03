@@ -27,8 +27,8 @@ export const getBoardByIdAndMakeBoardActiveController = async (
   const userId = req.user._id;
   const board = await getBoardByIdAndMakeBoardActive({
     boardId,
-    previous_boardId,
     userId,
+    previous_boardId,
   });
   if (!board) return next(createHttpError(404, 'Board not found'));
   res.json({

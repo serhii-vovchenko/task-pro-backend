@@ -1,0 +1,23 @@
+tags:
+  - Boards
+summary: Delete Board by ID
+operationId: deleteBoardById
+description: Deletes a board by its ID for the authenticated user.
+security:
+  - bearerAuth: []
+parameters:
+  - name: boardId
+    in: path
+    required: true
+    schema:
+      type: string
+      example: '6727724a5d8f0e17df1b4744'
+    description: Unique identifier of the board to be deleted
+responses:
+  '204':
+    description: Board successfully deleted. No content returned.
+
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
