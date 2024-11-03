@@ -13,6 +13,8 @@ import {
   updateColumnSchema,
 } from '../validation/columns.js';
 import { isValid } from '../middlewares/isValid.js';
+import tasksRouter from './tasks.js';
+import { addColumnIdToReq } from '../middlewares/addColumnIdToReq.js';
 // import { addBoardIdToReq } from '../middlewares/addBoardIdToReq.js';
 
 const columnsRouter = Router();
@@ -20,7 +22,9 @@ const columnsRouter = Router();
 columnsRouter.use(authenticate);
 // columnsRouter.use(addBoardIdToReq);
 
-columnsRouter.use(':/columnId', isValid('columnId'));
+columnsRouter.use('/:columnId', isValid('columnId'), addColumnIdToReq);
+
+columnsRouter.use('/:columnId/tasks', tasksRouter);
 
 columnsRouter.get('/', ctrlWrapper(getColumnsController));
 columnsRouter.post(
