@@ -62,8 +62,8 @@ paths:
     delete:
       $ref: ../swagger/paths/boards/{id}/delete.yaml
   /boards/{boardId}/columns:
-  post:
-    $ref: ../swagger/paths/columns/post.yaml
+    post:
+      $ref: ../swagger/paths/columns/post.yaml
   /boards/{boardId}/columns/{columnId}:
     patch:
       $ref: ../swagger/paths/columns/{id}/patch.yaml

@@ -1,6 +1,6 @@
 tags:
   - Columns
-summary: Create a Column
+summary: Create a column
 operationId: createColumn
 description: 'Create a column, specified under a particular board.'
 security:
@@ -27,7 +27,7 @@ requestBody:
             example: 'Updated Column Title'
 responses:
   '200':
-    description: 'Column created successfully'
+    description: Successfully created
     content:
       application/json:
         schema:
@@ -53,6 +53,6 @@ responses:
                   type: string
                   description: Created title of the column
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    $ref: '../../components/responses/401.yaml'
   '404':
-    $ref: '../../../components/responses/404.yaml'
+    $ref: '../../components/responses/404.yaml'

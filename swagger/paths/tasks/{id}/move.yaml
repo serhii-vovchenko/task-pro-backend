@@ -1,6 +1,6 @@
 tags:
   - Tasks
-summary: Move a task between columns
+summary: Move task between columns
 operationId: MoveTask
 description:
   'Move a task from its current column to a specified target column within the
@@ -43,7 +43,7 @@ requestBody:
             example: '6727d4f7742499c95150c521'
 responses:
   '200':
-    description: Moves a task
+    description: Successfully moved
     content:
       application/json:
         schema:
@@ -61,10 +61,23 @@ responses:
               example: Task moved successfully!
             data:
               type: object
-              $ref: '../../../components/schemas/task.yaml'
+              $ref: '../../../../components/schemas/task.yaml'
+  '400':
+    description: Bad Request
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Task ID and new column ID are required'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':
-    $ref: '../../../components/responses/404.yaml'
+    $ref: ../../../components/responses/404.yaml
   '500':
     $ref: '../../../components/responses/500.yaml'

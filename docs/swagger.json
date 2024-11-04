@@ -46,9 +46,7 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Register an user",
         "description": "Register an user",
         "operationId": "registerUser",
@@ -58,11 +56,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "name",
-                  "email",
-                  "password"
-                ],
+                "required": ["name", "email", "password"],
                 "properties": {
                   "name": {
                     "type": "string",
@@ -92,11 +86,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -108,11 +98,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "_id",
-                        "name",
-                        "email"
-                      ],
+                      "required": ["_id", "name", "email"],
                       "properties": {
                         "_id": {
                           "description": "User's id",
@@ -147,9 +133,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login an user",
         "description": "Login an user and create session",
         "operationId": "loginUser",
@@ -159,10 +143,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -184,11 +165,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -200,9 +177,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "accessToken"
-                      ],
+                      "required": ["accessToken"],
                       "properties": {
                         "accessToken": {
                           "type": "string",
@@ -224,11 +199,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -240,9 +211,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "message"
-                      ],
+                      "required": ["message"],
                       "properties": {
                         "message": {
                           "type": "string",
@@ -260,9 +229,7 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logout user",
         "description": "Logs out the user by deleting the session identified by sessionId cookie ",
         "operationId": "logoutUser",
@@ -290,9 +257,7 @@
     },
     "/users/current": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get current user",
         "operationId": "getCurrentUser",
         "description": "Get the currently authenticated user information.",
@@ -308,11 +273,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -338,9 +299,7 @@
     },
     "/users/theme": {
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update user theme",
         "operationId": "patchUserTheme",
         "description": "Update the theme preference for the currently authenticated user.",
@@ -358,11 +317,7 @@
                   "theme": {
                     "description": "Preferred theme of the user",
                     "type": "string",
-                    "enum": [
-                      "dark",
-                      "light",
-                      "violet"
-                    ],
+                    "enum": ["dark", "light", "violet"],
                     "example": "light"
                   }
                 }
@@ -377,11 +332,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -413,9 +364,7 @@
     },
     "/users/edit": {
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update current user",
         "operationId": "patchCurrentUser",
         "description": "Update the currently authenticated user information.",
@@ -462,11 +411,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -492,9 +437,7 @@
     },
     "/help": {
       "post": {
-        "tags": [
-          "Help"
-        ],
+        "tags": ["Help"],
         "summary": "Send email to support",
         "operationId": "sendEmail",
         "description": "Send email to support and copy of email to user",
@@ -504,10 +447,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "userMessage"
-                ],
+                "required": ["email", "userMessage"],
                 "properties": {
                   "email": {
                     "type": "string",
@@ -531,10 +471,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -555,11 +492,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -571,9 +504,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "message"
-                      ],
+                      "required": ["message"],
                       "properties": {
                         "message": {
                           "type": "string",
@@ -592,11 +523,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -608,9 +535,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "message"
-                      ],
+                      "required": ["message"],
                       "properties": {
                         "message": {
                           "type": "string",
@@ -628,9 +553,7 @@
     },
     "/boards": {
       "get": {
-        "tags": [
-          "Boards"
-        ],
+        "tags": ["Boards"],
         "summary": "Get all boards",
         "operationId": "getAllBoards",
         "description": "Retrieve all boards associated with the authenticated user.",
@@ -646,11 +569,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -736,9 +655,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Boards"
-        ],
+        "tags": ["Boards"],
         "summary": "Create a new board",
         "operationId": "createBoard",
         "description": "Create a new board for the authenticated user.",
@@ -752,10 +669,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "title",
-                  "iconName"
-                ],
+                "required": ["title", "iconName"],
                 "properties": {
                   "title": {
                     "type": "string",
@@ -811,11 +725,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -920,9 +830,7 @@
     },
     "/boards/info": {
       "get": {
-        "tags": [
-          "Boards"
-        ],
+        "tags": ["Boards"],
         "summary": "Retrieve Icons and Backgrounds",
         "operationId": "getBackgroundsAndIcons",
         "description": "Retrieves a list of available icons and backgrounds for the boards. \nReturns the details including their IDs, names, and URLs.\n",
@@ -938,11 +846,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -954,20 +858,13 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "icons",
-                        "backgrounds"
-                      ],
+                      "required": ["icons", "backgrounds"],
                       "properties": {
                         "icons": {
                           "type": "array",
                           "items": {
                             "type": "object",
-                            "required": [
-                              "_id",
-                              "name",
-                              "iconUrl"
-                            ],
+                            "required": ["_id", "name", "iconUrl"],
                             "properties": {
                               "_id": {
                                 "type": "string",
@@ -992,11 +889,7 @@
                           "type": "array",
                           "items": {
                             "type": "object",
-                            "required": [
-                              "_id",
-                              "name",
-                              "modalUrl"
-                            ],
+                            "required": ["_id", "name", "modalUrl"],
                             "properties": {
                               "_id": {
                                 "type": "string",
@@ -1049,9 +942,7 @@
     },
     "/boards/{boardId}": {
       "get": {
-        "tags": [
-          "Boards"
-        ],
+        "tags": ["Boards"],
         "summary": "Get Board by ID and Set as Active",
         "operationId": "getBoardByIdAndMakeActive",
         "description": "Retrieves a board by its ID and sets it as the active board for the user.\nIf a `previous_boardId` is provided as a query parameter, it will be deactivated; \nif not, all boards of the user will be deactivated.\n",
@@ -1090,11 +981,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1135,10 +1022,7 @@
                         },
                         "icon": {
                           "type": "object",
-                          "required": [
-                            "name",
-                            "iconUrl"
-                          ],
+                          "required": ["name", "iconUrl"],
                           "properties": {
                             "name": {
                               "type": "string",
@@ -1156,11 +1040,7 @@
                         "backgrounds": {
                           "type": "object",
                           "nullable": true,
-                          "required": [
-                            "name",
-                            "resolution",
-                            "modalUrl"
-                          ],
+                          "required": ["name", "resolution", "modalUrl"],
                           "properties": {
                             "name": {
                               "type": "string",
@@ -1291,11 +1171,7 @@
                                     },
                                     "priority": {
                                       "type": "string",
-                                      "enum": [
-                                        "low",
-                                        "medium",
-                                        "high"
-                                      ],
+                                      "enum": ["low", "medium", "high"],
                                       "description": "Priority level of the task"
                                     },
                                     "status": {
@@ -1340,9 +1216,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Boards"
-        ],
+        "tags": ["Boards"],
         "summary": "Update board details",
         "description": "Update title, icon, or background of an existing board.",
         "operationId": "updateBoard",
@@ -1414,9 +1288,7 @@
                     "example": "bg-1"
                   }
                 },
-                "required": [
-                  "title"
-                ]
+                "required": ["title"]
               }
             }
           }
@@ -1521,9 +1393,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Boards"
-        ],
+        "tags": ["Boards"],
         "summary": "Delete Board by ID",
         "operationId": "deleteBoardById",
         "description": "Deletes a board by its ID for the authenticated user.",
@@ -1557,18 +1427,96 @@
         }
       }
     },
-    "/boards/{boardId}/columns": null,
-    "post": {
-      "$ref": "../swagger/paths/columns/post.yaml"
+    "/boards/{boardId}/columns": {
+      "post": {
+        "tags": ["Columns"],
+        "summary": "Create a column",
+        "operationId": "createColumn",
+        "description": "Create a column, specified under a particular board.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66f19ff0bcd4dd2171ec0d22",
+              "description": "Unique identifier of the board"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title"],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "New title for the column",
+                    "example": "Updated Column Title"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "message", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully create a column!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Column ID"
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Created title of the column"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
     },
     "/boards/{boardId}/columns/{columnId}": {
       "patch": {
-        "tags": [
-          "Columns"
-        ],
-        "summary": "Update Column by ID",
+        "tags": ["Columns"],
+        "summary": "Update column by ID",
         "operationId": "updateColumn",
-        "description": "Update a column by its ID, specified under a particular user.",
+        "description": "Update a column by its ID, specified under a a particular board.",
         "security": [
           {
             "bearerAuth": []
@@ -1614,16 +1562,12 @@
         },
         "responses": {
           "200": {
-            "description": "Column updated successfully",
+            "description": "Successfully updated",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1660,10 +1604,8 @@
         }
       },
       "delete": {
-        "tags": [
-          "Columns"
-        ],
-        "summary": "Delete Column by ID and its associated Tasks",
+        "tags": ["Columns"],
+        "summary": "Delete column by ID and its associated tasks",
         "operationId": "deleteColumnWithTasks",
         "description": "Removes specified column and all tasks associated with it.",
         "security": [
@@ -1708,10 +1650,8 @@
     },
     "/boards/{boardId}/columns/{columnId}/tasks": {
       "post": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Create a Task",
+        "tags": ["Tasks"],
+        "summary": "Create a task",
         "operationId": "createTask",
         "description": "Create a task under a particular column.",
         "security": [
@@ -1746,10 +1686,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "title",
-                  "deadline"
-                ],
+                "required": ["title", "deadline"],
                 "properties": {
                   "title": {
                     "description": "Task's title",
@@ -1764,12 +1701,7 @@
                   "priority": {
                     "description": "Task's priority level",
                     "type": "string",
-                    "enum": [
-                      "low",
-                      "medium",
-                      "high",
-                      "none"
-                    ],
+                    "enum": ["low", "medium", "high", "none"],
                     "default": "none"
                   },
                   "deadline": {
@@ -1785,16 +1717,12 @@
         },
         "responses": {
           "201": {
-            "description": "Creates a task",
+            "description": "Successfully created",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1827,10 +1755,8 @@
     },
     "/boards/{boardId}/columns/{columnId}/tasks/{taskId}": {
       "patch": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Update a Task",
+        "tags": ["Tasks"],
+        "summary": "Update task by ID",
         "operationId": "updateTask",
         "description": "Update a task under a particular column.",
         "security": [
@@ -1889,12 +1815,7 @@
                   "priority": {
                     "description": "Task's priority level",
                     "type": "string",
-                    "enum": [
-                      "low",
-                      "medium",
-                      "high",
-                      "none"
-                    ],
+                    "enum": ["low", "medium", "high", "none"],
                     "default": "none"
                   },
                   "deadline": {
@@ -1910,16 +1831,12 @@
         },
         "responses": {
           "200": {
-            "description": "Task updated successfully!",
+            "description": "Successfully updated",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1950,9 +1867,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Tasks"
-        ],
+        "tags": ["Tasks"],
         "summary": "Delete task by ID",
         "operationId": "deleteTask",
         "description": "Removes specified task.",
@@ -2008,10 +1923,8 @@
     },
     "/boards/{boardId}/columns/{columnId}/tasks/{taskId}/move": {
       "patch": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Move a task between columns",
+        "tags": ["Tasks"],
+        "summary": "Move task between columns",
         "operationId": "MoveTask",
         "description": "Move a task from its current column to a specified target column within the same board.",
         "security": [
@@ -2056,9 +1969,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "newColumnId"
-                ],
+                "required": ["newColumnId"],
                 "properties": {
                   "newColumnId": {
                     "description": "Id of the column where task should be moved",
@@ -2072,16 +1983,12 @@
         },
         "responses": {
           "200": {
-            "description": "Moves a task",
+            "description": "Successfully moved",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -2094,6 +2001,26 @@
                     "data": {
                       "type": "object",
                       "$ref": "#/components/schemas/task"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Task ID and new column ID are required"
                     }
                   }
                 }
@@ -2127,11 +2054,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -2143,9 +2066,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -2164,11 +2085,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -2180,9 +2097,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -2201,11 +2116,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -2217,9 +2128,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -2238,11 +2147,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -2254,9 +2159,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -2306,21 +2209,14 @@
           "theme": {
             "description": "theme of interface",
             "type": "string",
-            "enum": [
-              "dark",
-              "light",
-              "violet"
-            ],
+            "enum": ["dark", "light", "violet"],
             "example": "light"
           }
         }
       },
       "task": {
         "type": "object",
-        "required": [
-          "title",
-          "deadline"
-        ],
+        "required": ["title", "deadline"],
         "properties": {
           "_id": {
             "description": "Task's id",
@@ -2340,12 +2236,7 @@
           "priority": {
             "description": "Task's priority level",
             "type": "string",
-            "enum": [
-              "low",
-              "medium",
-              "high",
-              "none"
-            ],
+            "enum": ["low", "medium", "high", "none"],
             "default": "none"
           },
           "deadline": {

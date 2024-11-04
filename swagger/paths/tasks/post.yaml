@@ -1,6 +1,6 @@
 tags:
   - Tasks
-summary: Create a Task
+summary: Create a task
 operationId: createTask
 description: 'Create a task under a particular column.'
 security:
@@ -50,7 +50,7 @@ requestBody:
             example: '2024-12-15'
 responses:
   '201':
-    description: Creates a task
+    description: Successfully created
     content:
       application/json:
         schema:
