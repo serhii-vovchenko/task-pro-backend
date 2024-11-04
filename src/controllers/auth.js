@@ -36,15 +36,15 @@ export const loginUserController = async (req, res) => {
 };
 
 export const logoutUserController = async (req, res, next) => {
-  const authHeader = req.get('Authorization')
+  const authHeader = req.get('Authorization');
   if (!authHeader) {
-    return next(createHttpError(401, 'Please provide Authorization header'))
+    return next(createHttpError(401, 'Please provide Authorization header'));
   }
 
-  const [bearer, accessToken] = authHeader.split(' ')
+  const [bearer, accessToken] = authHeader.split(' ');
 
   if (bearer !== 'Bearer' || !accessToken) {
-    return next(createHttpError(401, "Auth header should be of type Bearer"))
+    return next(createHttpError(401, 'Auth header should be of type Bearer'));
   }
 
   if (accessToken) {

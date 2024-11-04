@@ -1,3 +1,4 @@
+import multer from 'multer';
 import { Router } from 'express';
 import {
   createTaskController,
@@ -12,6 +13,7 @@ import { createTaskSchema, updateTaskSchema } from '../validation/tasks.js';
 import { isValid } from '../middlewares/isValid.js';
 
 const tasksRouter = Router();
+const upload = multer();
 
 tasksRouter.use(authenticate);
 
@@ -19,11 +21,13 @@ tasksRouter.use('/:taskId', isValid('taskId'));
 
 tasksRouter.post(
   '/',
+  upload.none(),
   validateBody(createTaskSchema),
   ctrlWrapper(createTaskController),
 );
 tasksRouter.patch(
   '/:taskId',
+  upload.none(),
   validateBody(updateTaskSchema),
   ctrlWrapper(updateTaskController),
 );
