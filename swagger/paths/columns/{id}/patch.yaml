@@ -7,13 +7,6 @@ security:
   - bearerAuth: []
 parameters:
   - in: path
-    name: boardId
-    required: true
-    schema:
-      type: string
-      example: '66f19ff0bcd4dd2171ec0d22'
-      description: Unique identifier of the board
-  - in: path
     name: columnId
     required: true
     schema:
@@ -50,13 +43,7 @@ responses:
               example: Successfully patched a column!
             data:
               type: object
-              properties:
-                _id:
-                  type: string
-                  description: Column ID
-                title:
-                  type: string
-                  description: Updated title of the column
+              $ref: '../../../components/schemas/columns.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':

@@ -7,20 +7,6 @@ security:
   - bearerAuth: []
 parameters:
   - in: path
-    name: boardId
-    required: true
-    schema:
-      type: string
-      example: '6727df6c4b3492bdaa888f95'
-      description: Unique identifier of the board
-  - in: path
-    name: columnId
-    required: true
-    schema:
-      type: string
-      example: '66f19ff0bcd4dd2171ec0d22'
-      description: Unique identifier of the column
-  - in: path
     name: taskId
     required: true
     schema:
@@ -72,14 +58,10 @@ responses:
               example: Successfully patched a task!
             data:
               type: object
-              $ref: '../../../components/schemas/task.yaml'
-              $ref: '../../../components/schemas/task.yaml'
+              $ref: '../../../components/schemas/tasks.yaml'
   '401':
-    $ref: '../../../components/responses/401.yaml'
     $ref: '../../../components/responses/401.yaml'
   '404':
     $ref: ../../../components/responses/404.yaml
-    $ref: '../../../components/responses/404.yaml'
   '500':
-    $ref: '../../../components/responses/500.yaml'
     $ref: '../../../components/responses/500.yaml'

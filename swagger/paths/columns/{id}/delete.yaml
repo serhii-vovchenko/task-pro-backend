@@ -7,13 +7,6 @@ security:
   - bearerAuth: []
 parameters:
   - in: path
-    name: boardId
-    required: true
-    schema:
-      type: string
-      example: '6727df6c4b3492bdaa888f95'
-      description: Unique identifier of the board
-  - in: path
     name: columnId
     required: true
     schema:
