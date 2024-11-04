@@ -7,9 +7,8 @@ import {
 } from '../services/tasks.js';
 
 export const createTaskController = async (req, res) => {
-  const { title, description, priority, deadline } = req.body;
+  const { title, description, priority, deadline, columnId } = req.body;
   const { _id: userId } = req.user;
-  const { columnId } = req;
 
   const task = await createTask({
     title,

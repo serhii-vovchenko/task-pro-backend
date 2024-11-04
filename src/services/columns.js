@@ -26,11 +26,10 @@ export const createColumn = async payload => {
   return newColumn;
 };
 
-export const updateColumn = async (columnId, userId, boardId, payload) => {
+export const updateColumn = async (columnId, userId, payload) => {
   const updatedColumn = await ColumnsCollection.findOneAndUpdate(
     {
       _id: columnId,
-      boardId,
       userId,
     },
     payload,
@@ -46,12 +45,11 @@ export const updateColumn = async (columnId, userId, boardId, payload) => {
   return updatedColumn;
 };
 
-export const deleteColumn = async (columnId, userId, boardId) => {
+export const deleteColumn = async (columnId, userId) => {
   await TasksCollection.deleteMany({ columnId });
 
   const deletedColumn = await ColumnsCollection.findOneAndDelete({
     _id: columnId,
-    boardId,
     userId,
   });
 

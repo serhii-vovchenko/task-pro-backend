@@ -1,7 +1,7 @@
 type: object
 required:
   - title
-  - deadline
+  - boardId
 properties:
   _id:
     description: "Task's id"
@@ -11,24 +11,10 @@ properties:
     description: "Task's title"
     type: string
     example: 'Complete project report'
-  description:
-    description: "Task's description"
+  boardId:
+    description: 'Id of the board under which tasks are stored'
     type: string
-    example: 'Write and submit the project report by end of the week.'
-  priority:
-    description: "Task's priority level"
-    type: string
-    enum: ['low', 'medium', 'high', 'none']
-    default: 'none'
-  deadline:
-    description: 'The deadline for completing the task'
-    type: string
-    format: date
-    example: '2024-12-15'
-  columnId:
-    description: 'Id of the column under which tasks are stored'
-    type: string
-    example: 66f19ff0bcd4dd2171ec0d22
+    example: '66f19ff0bcd4dd2171ec0d22'
   userId:
     description: 'Id of the user under which tasks are stored'
     type: string

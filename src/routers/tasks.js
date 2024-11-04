@@ -9,10 +9,13 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { validateBody } from '../utils/validateBody.js';
 import { createTaskSchema, updateTaskSchema } from '../validation/tasks.js';
+import { isValid } from '../middlewares/isValid.js';
 
 const tasksRouter = Router();
 
 tasksRouter.use(authenticate);
+
+tasksRouter.use('/:taskId', isValid('taskId'));
 
 tasksRouter.post(
   '/',

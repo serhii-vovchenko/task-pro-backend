@@ -5,14 +5,6 @@ operationId: createColumn
 description: 'Create a column, specified under a particular board.'
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: boardId
-    required: true
-    schema:
-      type: string
-      example: '66f19ff0bcd4dd2171ec0d22'
-      description: Unique identifier of the board
 requestBody:
   content:
     application/json:
@@ -20,11 +12,16 @@ requestBody:
         type: object
         required:
           - title
+          - boardId
         properties:
           title:
             type: string
             description: New title for the column
             example: 'Updated Column Title'
+          boardId:
+            type: string
+            description: 'Unique identifier of the board'
+            example: '66f19ff0bcd4dd2171ec0d22'
 responses:
   '200':
     description: Successfully created
@@ -45,13 +42,7 @@ responses:
               example: Successfully create a column!
             data:
               type: object
-              properties:
-                _id:
-                  type: string
-                  description: Column ID
-                title:
-                  type: string
-                  description: Created title of the column
+              $ref: '../../components/schemas/columns.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
   '404':

@@ -5,21 +5,6 @@ operationId: createTask
 description: 'Create a task under a particular column.'
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: boardId
-    required: true
-    schema:
-      type: string
-      example: '6727df6c4b3492bdaa888f95'
-      description: Unique identifier of the board
-  - in: path
-    name: columnId
-    required: true
-    schema:
-      type: string
-      example: '66f19ff0bcd4dd2171ec0d22'
-      description: Unique identifier of the column
 requestBody:
   content:
     multipart/form-data:
@@ -28,6 +13,7 @@ requestBody:
         required:
           - title
           - deadline
+          - columnId
         properties:
           title:
             description: "Task's title"
@@ -48,6 +34,10 @@ requestBody:
             type: string
             format: date
             example: '2024-12-15'
+          columnId:
+            description: 'Unique identifier of the column'
+            type: string
+            example: '66f19ff0bcd4dd2171ec0d22'
 responses:
   '201':
     description: Successfully created
@@ -68,7 +58,7 @@ responses:
               example: Successfully created a task!
             data:
               type: object
-              $ref: '../../components/schemas/task.yaml'
+              $ref: '../../components/schemas/tasks.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
   '404':

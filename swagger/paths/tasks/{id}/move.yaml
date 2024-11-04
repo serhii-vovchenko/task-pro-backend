@@ -9,20 +9,6 @@ security:
   - bearerAuth: []
 parameters:
   - in: path
-    name: boardId
-    required: true
-    schema:
-      type: string
-      example: '6727df6c4b3492bdaa888f95'
-      description: Unique identifier of the board
-  - in: path
-    name: columnId
-    required: true
-    schema:
-      type: string
-      example: '66f19ff0bcd4dd2171ec0d22'
-      description: Unique identifier of the column
-  - in: path
     name: taskId
     required: true
     schema:
@@ -61,7 +47,7 @@ responses:
               example: Task moved successfully!
             data:
               type: object
-              $ref: '../../../../components/schemas/task.yaml'
+              $ref: '../../../components/schemas/tasks.yaml'
   '400':
     description: Bad Request
     content:

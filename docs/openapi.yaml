@@ -61,23 +61,23 @@ paths:
       $ref: ../swagger/paths/boards/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/boards/{id}/delete.yaml
-  /boards/{boardId}/columns:
+  /columns:
     post:
       $ref: ../swagger/paths/columns/post.yaml
-  /boards/{boardId}/columns/{columnId}:
+  /columns/{columnId}:
     patch:
       $ref: ../swagger/paths/columns/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/columns/{id}/delete.yaml
-  /boards/{boardId}/columns/{columnId}/tasks:
+  /tasks:
     post:
       $ref: ../swagger/paths/tasks/post.yaml
-  /boards/{boardId}/columns/{columnId}/tasks/{taskId}:
+  /tasks/{taskId}:
     patch:
       $ref: ../swagger/paths/tasks/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/tasks/{id}/delete.yaml
-  /boards/{boardId}/columns/{columnId}/tasks/{taskId}/move:
+  /tasks/{taskId}/move:
     patch:
       $ref: ../swagger/paths/tasks/{id}/move.yaml
 components:
