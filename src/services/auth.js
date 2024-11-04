@@ -39,13 +39,23 @@ export const loginUser = async loginData => {
   return {
     user: {
       name: user.name,
-      email: user.email
+      email: user.email,
     },
-    session
-  }
-  
+    session,
+  };
 };
 
-export const logoutUser = async accessToken => {
-  await SessionsCollection.deleteOne({ accessToken });
+export const logoutUser = async (accessToken, sessionId) => {
+  try {
+    const session = await SessionsCollection.findOne({
+      $or: [{ accessToken: accessToken }, { _id: sessionId }],
+    });
+    if (!session) {
+      throw new Error('Session not found');
+    }
+    await SessionsCollection.deleteOne({ _id: session._id });
+  } catch (error) {
+    console.error('Error during logout:', error);
+    throw error;
+  }
 };

@@ -36,23 +36,30 @@ export const loginUserController = async (req, res) => {
 };
 
 export const logoutUserController = async (req, res, next) => {
-  const authHeader = req.get('Authorization')
-  if (!authHeader) {
-    return next(createHttpError(401, 'Please provide Authorization header'))
+  try {
+    const authHeader = req.get('Authorization');
+    if (!authHeader) {
+      return next(createHttpError(401, 'Please provide Authorization header'));
+    }
+
+    const [bearer, accessToken] = authHeader.split(' ');
+
+    if (bearer !== 'Bearer' || !accessToken) {
+      return next(createHttpError(401, 'Auth header should be of type Bearer'));
+    }
+
+    const sessionId = req.cookies.sessionId;
+
+    if (accessToken && sessionId) {
+      await logoutUser(accessToken, sessionId);
+    }
+
+    res.clearCookie('sessionId', { httpOnly: true, secure: true });
+    res.clearCookie('refreshToken', { httpOnly: true, secure: true });
+
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error during logout:', error);
+    next(createHttpError(500, 'Logout failed'));
   }
-
-  const [bearer, accessToken] = authHeader.split(' ')
-
-  if (bearer !== 'Bearer' || !accessToken) {
-    return next(createHttpError(401, "Auth header should be of type Bearer"))
-  }
-
-  if (accessToken) {
-    await logoutUser(accessToken);
-  }
-
-  res.clearCookie('sessionId');
-  res.clearCookie('refreshToken');
-
-  res.status(204).send();
 };
