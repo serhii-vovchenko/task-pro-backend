@@ -1,17 +1,32 @@
 tags:
   - Tasks
-summary: Update task
+summary: Update a Task
 operationId: updateTask
-description: 'Update task by ID'
+description: 'Update a task under a particular column.'
 security:
   - bearerAuth: []
 parameters:
   - in: path
-    name: id
+    name: boardId
     required: true
     schema:
       type: string
-      example: '65ca67e7ae7f10c88b598384'
+      example: '6727df6c4b3492bdaa888f95'
+      description: Unique identifier of the board
+  - in: path
+    name: columnId
+    required: true
+    schema:
+      type: string
+      example: '66f19ff0bcd4dd2171ec0d22'
+      description: Unique identifier of the column
+  - in: path
+    name: taskId
+    required: true
+    schema:
+      type: string
+      example: '6727d414742499c95150c4fd'
+      description: Unique identifier of the task
 requestBody:
   content:
     multipart/form-data:
@@ -21,33 +36,25 @@ requestBody:
           title:
             description: "Task's title"
             type: string
-            example: 'Complete report'
+            example: 'Complete project report'
           description:
             description: "Task's description"
             type: string
-            example:
-              'Prepare and submit the financial report by the end of the week.'
-          dueDate:
-            description: "Task's due date"
+            example: 'Write and submit the project report by end of the week.'
+          priority:
+            description: "Task's priority level"
+            type: string
+            enum: ['low', 'medium', 'high', 'none']
+            default: 'none'
+          deadline:
+            description:
+              'The deadline for completing the task. It must be a valid date.'
             type: string
             format: date
-            example: '2024-11-01'
-          priority:
-            description: 'Priority level of the task'
-            type: string
-            enum: ['low', 'medium', 'high']
-          isCompleted:
-            description: 'Status of task completion'
-            type: boolean
-            example: false
-          attachment:
-            type: string
-            format: binary
-            description: 'File attachment for the task'
-            example: https://res.cloudinary.com/dsf7ryper/image/upload/v1724619697/file.pdf
+            example: '2024-12-15'
 responses:
   '200':
-    description: 'Update task by ID'
+    description: Task updated successfully!
     content:
       application/json:
         schema:
@@ -62,13 +69,13 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully updated task
+              example: Successfully patched a task!
             data:
               type: object
-              $ref: '../../../components/schemas/task.yaml'
-  '404':
-    $ref: '../../../components/responses/404.yaml'
+              $ref: '../../components/schemas/task.yaml'
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: ../../components/responses/404.yaml
   '500':
-    $ref: '../../../components/responses/500.yaml'
+    $ref: '../../components/responses/500.yaml'

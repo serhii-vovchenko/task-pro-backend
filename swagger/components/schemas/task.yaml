@@ -1,13 +1,7 @@
-# swagger/components/schemas/task.yaml
-
 type: object
 required:
-  - _id
   - title
-  - description
-  - dueDate
-  - priority
-  - status
+  - deadline
 properties:
   _id:
     description: "Task's id"
@@ -21,25 +15,31 @@ properties:
     description: "Task's description"
     type: string
     example: 'Write and submit the project report by end of the week.'
-  dueDate:
-    description: "Task's due date"
-    type: string
-    format: date
-    example: '2024-10-31'
   priority:
     description: "Task's priority level"
     type: string
-    enum: ['low', 'medium', 'high']
-  status:
-    description: 'Current status of the task'
+    enum: ['low', 'medium', 'high', 'none']
+    default: 'none'
+  deadline:
+    description: 'The deadline for completing the task'
     type: string
-    enum: ['not started', 'in progress', 'completed']
-  assignedTo:
-    description: 'ID of the user the task is assigned to'
+    format: date
+    example: '2024-12-15'
+  columnId:
+    description: 'Id of the column under which tasks are stored'
     type: string
-    example: 65e4decdd286b30065d54af9
+    example: 66f19ff0bcd4dd2171ec0d22
+  userId:
+    description: 'Id of the user under which tasks are stored'
+    type: string
+    example: 6726542a5ed62c2ba1cf9a0e
   createdAt:
-    description: 'Date when the task was created'
+    description: 'The date and time when the task was created.'
     type: string
     format: date-time
-    example: '2024-10-25T12:00:00Z'
+    example: '2024-11-03T20:51:57.531Z'
+  updatedAt:
+    description: 'The date and time when the task was last updated.'
+    type: string
+    format: date-time
+    example: '2024-11-04T00:22:04.231Z'

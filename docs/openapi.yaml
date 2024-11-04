@@ -7,8 +7,6 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is a documentation of task app
 tags:
-  - name: Tasks
-    description: Operations about users.
   - name: Auth
     description: Auth operations.
   - name: Users
@@ -17,22 +15,16 @@ tags:
     description: Send email to support.
   - name: Boards
     description: add, remove and update board for the authenticated user.
+  - name: Columns
+    description: add, remove and update column for the authenticated user.
+  - name: Tasks
+    description:
+      add, remove, update and move (from one column to another) task for the
+      authenticated user.
 servers:
   - url: http://localhost:3000
   - url: https://task-pro-backend-mcfs.onrender.com
 paths:
-  /task:
-    get:
-      $ref: ../swagger/paths/tasks/get.yaml
-    post:
-      $ref: ../swagger/paths/tasks/post.yaml
-  /task/{id}:
-    get:
-      $ref: ../swagger/paths/tasks/{id}/get.yaml
-    patch:
-      $ref: ../swagger/paths/tasks/{id}/patch.yaml
-    delete:
-      $ref: ../swagger/paths/tasks/{id}/delete.yaml
   /auth/register:
     post:
       $ref: ../swagger/paths/auth/register.yaml
@@ -67,6 +59,25 @@ paths:
       $ref: ../swagger/paths/boards/{id}/get.yaml
     delete:
       $ref: ../swagger/paths/boards/{id}/delete.yaml
+  /boards/{boardId}/columns:
+  post:
+    $ref: ../swagger/paths/columns/post.yaml
+  /boards/{boardId}/columns/{columnId}:
+    patch:
+      $ref: ../swagger/paths/columns/{id}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/columns/{id}/delete.yaml
+  /boards/{boardId}/columns/{columnId}/tasks:
+    post:
+      $ref: ../swagger/paths/tasks/post.yaml
+  /boards/{boardId}/columns/{columnId}/tasks/{taskId}:
+    patch:
+      $ref: ../swagger/paths/tasks/{id}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/tasks/{id}/delete.yaml
+  /boards/{boardId}/columns/{columnId}/tasks/{taskId}/move:
+    patch:
+      $ref: ../swagger/paths/tasks/{id}/move.yaml
 components:
   securitySchemes:
     bearerAuth:
