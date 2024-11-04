@@ -1,8 +1,8 @@
 tags:
   - Columns
-summary: Update Column by ID
+summary: Update column by ID
 operationId: updateColumn
-description: 'Update a column by its ID, specified under a particular user.'
+description: 'Update a column by its ID, specified under a a particular board.'
 security:
   - bearerAuth: []
 parameters:
@@ -32,7 +32,7 @@ requestBody:
             example: 'Updated Column Title'
 responses:
   '200':
-    description: 'Column updated successfully'
+    description: Successfully updated
     content:
       application/json:
         schema:

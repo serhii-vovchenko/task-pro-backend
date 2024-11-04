@@ -1,8 +1,8 @@
 tags:
   - Columns
-summary: Delete Column by ID and its associated Tasks
+summary: Delete column by ID and its associated tasks
 operationId: deleteColumnWithTasks
-description: 'Removes specified column and all tasks associated with it.'
+description: 'Remove specified column and all tasks associated with it.'
 security:
   - bearerAuth: []
 parameters:

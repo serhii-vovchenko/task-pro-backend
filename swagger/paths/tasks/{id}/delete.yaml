@@ -2,7 +2,7 @@ tags:
   - Tasks
 summary: Delete task by ID
 operationId: deleteTask
-description: 'Removes specified task.'
+description: 'Remove specified task.'
 security:
   - bearerAuth: []
 parameters:
