@@ -5,7 +5,7 @@ import { saveFileToCloudinary } from '../utils/saveFileToСloudinary.js';
 
 export const getCurrentUserController = async (req, res, next) => {
   const user = await getUserById(req.user._id);
-  if (!user) next(createHttpError(404, 'User not found'));
+  if (!user) return next(createHttpError(404, 'User not found'));
   res.json({
     status: 200,
     message: 'Succsessfully found user',
