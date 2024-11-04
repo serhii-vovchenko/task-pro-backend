@@ -23,7 +23,7 @@ export const getBoardByIdAndMakeBoardActiveController = async (
   next,
 ) => {
   const { boardId } = req.params;
-  const { previous_boardId } = req.body;
+  const { previous_boardId } = req.query;
   const userId = req.user._id;
   const board = await getBoardByIdAndMakeBoardActive({
     boardId,

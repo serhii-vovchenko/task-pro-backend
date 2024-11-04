@@ -3,6 +3,8 @@ tags:
 summary: Update board details
 description: Update title, icon, or background of an existing board.
 operationId: updateBoard
+security:
+  - bearerAuth: []
 parameters:
   - name: boardId
     in: path

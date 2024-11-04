@@ -1054,7 +1054,7 @@
         ],
         "summary": "Get Board by ID and Set as Active",
         "operationId": "getBoardByIdAndMakeActive",
-        "description": "Retrieves a board by its ID and sets it as the active board for the user.\nIf a `previous_boardId` is provided in the request body, it will be deactivated; \nif not, all boards of the user will be deactivated.\n",
+        "description": "Retrieves a board by its ID and sets it as the active board for the user.\nIf a `previous_boardId` is provided as a query parameter, it will be deactivated; \nif not, all boards of the user will be deactivated.\n",
         "security": [
           {
             "bearerAuth": []
@@ -1069,27 +1069,20 @@
               "type": "string",
               "example": "6727724a5d8f0e17df1b4744"
             },
-            "description": "Unique identifier of the board"
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "previous_boardId": {
-                    "type": "string",
-                    "nullable": true,
-                    "description": "ID of the previously active board to deactivate. \nIf not provided, all boards will be set to inactive.\n",
-                    "example": null
-                  }
-                }
-              }
+            "description": "Unique identifier of the board to be activated."
+          },
+          {
+            "name": "previous_boardId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "ID of the previously active board to deactivate. \nIf not provided, all boards will be set to inactive.\n",
+              "example": "5f8d0d55b54764421b7156c7"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved board and set it as active",
@@ -1346,8 +1339,186 @@
           }
         }
       },
-      "path": {
-        "$ref": "../swagger/paths/boards/{id}/patch.yaml"
+      "patch": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Update board details",
+        "description": "Update title, icon, or background of an existing board.",
+        "operationId": "updateBoard",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the board to update."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Title of the board",
+                    "minLength": 3,
+                    "maxLength": 60,
+                    "example": "Project Planning"
+                  },
+                  "iconName": {
+                    "type": "string",
+                    "description": "Name of the icon for the board",
+                    "enum": [
+                      "1_icon-project",
+                      "2_icon-star",
+                      "3_icon-loading",
+                      "4_icon-puzzle-piece",
+                      "5_icon-container",
+                      "6_icon-lightning",
+                      "7_icon-colors",
+                      "8_icon-hexagon"
+                    ],
+                    "example": "1_icon-project"
+                  },
+                  "backgroundName": {
+                    "type": "string",
+                    "description": "Name of the background for the board",
+                    "enum": [
+                      "bg-1",
+                      "bg-2",
+                      "bg-3",
+                      "bg-4",
+                      "bg-5",
+                      "bg-6",
+                      "bg-7",
+                      "bg-8",
+                      "bg-9",
+                      "bg-10",
+                      "bg-11",
+                      "bg-12",
+                      "bg-13",
+                      "bg-14",
+                      "bg-15"
+                    ],
+                    "example": "bg-1"
+                  }
+                },
+                "required": [
+                  "title"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the board",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "board": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Board ID",
+                          "example": "5f8d0d55b54764421b7156c7"
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Title of the board",
+                          "example": "Project Planning"
+                        },
+                        "icon": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "example": "1_icon-project"
+                            },
+                            "iconUrl": {
+                              "type": "string",
+                              "example": "https://example.com/icons/1_icon-project.png"
+                            }
+                          }
+                        },
+                        "backgrounds": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "example": "bg-1"
+                            },
+                            "modalUrl": {
+                              "type": "string",
+                              "example": "https://example.com/backgrounds/bg-1.png"
+                            },
+                            "properties": {
+                              "mobile": {
+                                "type": "string",
+                                "format": "uri",
+                                "example": "https://example.com/backgrounds/bg-1-mobile.jpg"
+                              },
+                              "tablet": {
+                                "type": "string",
+                                "format": "uri",
+                                "example": "https://example.com/backgrounds/bg-1-tablet.jpg"
+                              },
+                              "desktop": {
+                                "type": "string",
+                                "format": "uri",
+                                "example": "https://example.com/backgrounds/bg-1-desktop.jpg"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, invalid data provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Title name cannot be empty."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
       },
       "delete": {
         "tags": [
