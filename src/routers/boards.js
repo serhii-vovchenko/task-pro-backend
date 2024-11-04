@@ -16,7 +16,6 @@ import {
   updateBoardSchema,
 } from '../validation/board.js';
 import { isValid } from '../middlewares/isValid.js';
-import columnsRouter from './columns.js';
 import { addBoardIdToReq } from '../middlewares/addBoardIdToReq.js';
 
 const boardsRouter = Router();
@@ -26,8 +25,6 @@ boardsRouter.use('/', authenticate);
 boardsRouter.get('/info', ctrlWrapper(getBackgroundsAndIconsController));
 
 boardsRouter.use('/:boardId', isValid('boardId'), addBoardIdToReq);
-
-boardsRouter.use('/:boardId/columns', columnsRouter);
 
 boardsRouter.get('/', ctrlWrapper(getAllBoardsController));
 

@@ -15,12 +15,10 @@ import {
 import { isValid } from '../middlewares/isValid.js';
 import tasksRouter from './tasks.js';
 import { addColumnIdToReq } from '../middlewares/addColumnIdToReq.js';
-// import { addBoardIdToReq } from '../middlewares/addBoardIdToReq.js';
 
 const columnsRouter = Router();
 
 columnsRouter.use(authenticate);
-// columnsRouter.use(addBoardIdToReq);
 
 columnsRouter.use('/:columnId', isValid('columnId'), addColumnIdToReq);
 

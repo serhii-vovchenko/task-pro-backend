@@ -97,7 +97,7 @@ export const updateActiveBoardSchema = Joi.object({
   previous_boardId: Joi.string()
     .length(24)
     .pattern(/^[0-9a-fA-F]{24}$/)
-    .default(null)
+    .allow(null)
     .messages({
       'string.length': 'Board ID must be exactly 24 characters long.',
       'string.pattern.base':

@@ -4,7 +4,7 @@ summary: Get Board by ID and Set as Active
 operationId: getBoardByIdAndMakeActive
 description: |
   Retrieves a board by its ID and sets it as the active board for the user.
-  If a `previous_boardId` is provided in the request body, it will be deactivated; 
+  If a `previous_boardId` is provided as a query parameter, it will be deactivated; 
   if not, all boards of the user will be deactivated.
 security:
   - bearerAuth: []
@@ -15,21 +15,17 @@ parameters:
     schema:
       type: string
       example: '6727724a5d8f0e17df1b4744'
-    description: Unique identifier of the board
-requestBody:
-  required: false
-  content:
-    application/json:
-      schema:
-        type: object
-        properties:
-          previous_boardId:
-            type: string
-            nullable: true
-            description: |
-              ID of the previously active board to deactivate. 
-              If not provided, all boards will be set to inactive.
-            example: null
+    description: Unique identifier of the board to be activated.
+  - name: previous_boardId
+    in: query
+    required: false
+    schema:
+      type: string
+      nullable: true
+      description: |
+        ID of the previously active board to deactivate. 
+        If not provided, all boards will be set to inactive.
+      example: '5f8d0d55b54764421b7156c7'
 responses:
   '200':
     description: Successfully retrieved board and set it as active
