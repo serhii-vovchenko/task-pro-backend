@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import { THIRTY_DAYS } from '../constants/auth.js';
 import { loginUser, logoutUser, registerUser } from '../services/auth.js';
 
@@ -34,9 +35,20 @@ export const loginUserController = async (req, res) => {
   });
 };
 
-export const logoutUserController = async (req, res) => {
-  if (req.cookies.sessionId) {
-    await logoutUser(req.cookies.sessionId);
+export const logoutUserController = async (req, res, next) => {
+  const authHeader = req.get('Authorization')
+  if (!authHeader) {
+    return next(createHttpError(401, 'Please provide Authorization header'))
+  }
+
+  const [bearer, accessToken] = authHeader.split(' ')
+
+  if (bearer !== 'Bearer' || !accessToken) {
+    return next(createHttpError(401, "Auth header should be of type Bearer"))
+  }
+
+  if (accessToken) {
+    await logoutUser(accessToken);
   }
 
   res.clearCookie('sessionId');
