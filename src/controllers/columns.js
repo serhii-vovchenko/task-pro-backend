@@ -7,19 +7,18 @@ import {
 } from '../services/columns.js';
 
 export const getColumnsController = async (req, res, next) => {
-  const columns = await getAllColumns(req.boardId, req.user._id);
+  const columns = await getAllColumns(req.body.boardId, req.user._id);
   if (!columns) return next(createHttpError(404, 'Columns not found'));
   res.json({
     status: 200,
-    message: 'Succsessfully found columns',
+    message: 'Successfully found columns',
     data: columns,
   });
 };
 
 export const createColumnController = async (req, res) => {
-  const { title } = req.body;
+  const { title, boardId } = req.body;
   const { _id: userId } = req.user;
-  const { boardId } = req;
 
   const column = await createColumn({
     title,
@@ -37,10 +36,9 @@ export const createColumnController = async (req, res) => {
 export const updateColumnController = async (req, res, next) => {
   const { _id: userId } = req.user;
   const { title } = req.body;
-  const { boardId } = req;
   const { columnId } = req.params;
 
-  const updatedColumn = await updateColumn(columnId, userId, boardId, {
+  const updatedColumn = await updateColumn(columnId, userId, {
     title,
   });
 
@@ -58,9 +56,8 @@ export const updateColumnController = async (req, res, next) => {
 export const deleteColumnController = async (req, res, next) => {
   const { _id: userId } = req.user;
   const { columnId } = req.params;
-  const { boardId } = req;
 
-  const column = await deleteColumn(columnId, userId, boardId);
+  const column = await deleteColumn(columnId, userId);
 
   if (!column) {
     return next(createHttpError(404, 'Column not found or unauthorized'));

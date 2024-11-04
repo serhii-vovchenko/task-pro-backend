@@ -18,6 +18,10 @@ export const createTaskSchema = Joi.object({
     'date.base': 'Deadline must be a valid date.',
     'any.required': 'Deadline is required.',
   }),
+  columnId: Joi.string().required().messages({
+    'any.required': 'Column ID is required.',
+    'string.empty': 'Column ID cannot be empty.',
+  }),
 });
 
 export const updateTaskSchema = Joi.object({
