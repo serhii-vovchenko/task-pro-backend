@@ -266,16 +266,9 @@
         "summary": "Logout user",
         "description": "Logs out the user by deleting the session identified by sessionId cookie ",
         "operationId": "logoutUser",
-        "security": [],
-        "parameters": [
+        "security": [
           {
-            "in": "cookie",
-            "name": "sessionId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Session ID stored in cookies, used to identify and delete the session."
+            "bearerAuth": []
           }
         ],
         "responses": {

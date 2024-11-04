@@ -8,6 +8,7 @@ import {
 
 export const createTaskController = async (req, res) => {
   const { title, description, priority, deadline, columnId } = req.body;
+  console.log(req.body);
   const { _id: userId } = req.user;
 
   const task = await createTask({
