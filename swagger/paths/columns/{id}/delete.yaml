@@ -1,8 +1,8 @@
 tags:
-  - Tasks
-summary: Delete task by ID
-operationId: deleteTask
-description: 'Removes specified task.'
+  - Columns
+summary: Delete Column by ID and its associated Tasks
+operationId: deleteColumnWithTasks
+description: 'Removes specified column and all tasks associated with it.'
 security:
   - bearerAuth: []
 parameters:
@@ -20,17 +20,10 @@ parameters:
       type: string
       example: '66f19ff0bcd4dd2171ec0d22'
       description: Unique identifier of the column
-  - in: path
-    name: taskId
-    required: true
-    schema:
-      type: string
-      example: '6727d414742499c95150c4fd'
-      description: Unique identifier of the task
 responses:
   '204':
     description: Successfully deleted
-  '404':
-    $ref: '../../../components/responses/404.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
