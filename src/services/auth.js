@@ -29,14 +29,21 @@ export const loginUser = async loginData => {
 
   const accessToken = randomBytes(30).toString('base64');
   const refreshToken = randomBytes(30).toString('base64');
-
-  return await SessionsCollection.create({
+  const session = await SessionsCollection.create({
     userId: user.id,
     accessToken,
     refreshToken,
     accessTokenValidUntil: new Date(Date.now() + TWO_HOURS),
     refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
   });
+  return {
+    user: {
+      name: user.name,
+      email: user.email
+    },
+    session
+  }
+  
 };
 
 export const logoutUser = async sessionId => {
