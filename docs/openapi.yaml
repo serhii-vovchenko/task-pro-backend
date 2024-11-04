@@ -57,6 +57,8 @@ paths:
   /boards/{boardId}:
     get:
       $ref: ../swagger/paths/boards/{id}/get.yaml
+    path:
+      $ref: ../swagger/paths/boards/{id}/patch.yaml
     delete:
       $ref: ../swagger/paths/boards/{id}/delete.yaml
   /boards/{boardId}/columns:

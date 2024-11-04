@@ -19,10 +19,6 @@
   ],
   "tags": [
     {
-      "name": "Tasks",
-      "description": "Operations about users."
-    },
-    {
       "name": "Auth",
       "description": "Auth operations."
     },
@@ -37,519 +33,17 @@
     {
       "name": "Boards",
       "description": "add, remove and update board for the authenticated user."
+    },
+    {
+      "name": "Columns",
+      "description": "add, remove and update column for the authenticated user."
+    },
+    {
+      "name": "Tasks",
+      "description": "add, remove, update and move (from one column to another) task for the authenticated user."
     }
   ],
   "paths": {
-    "/task": {
-      "get": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Get list of tasks",
-        "operationId": "getTasks",
-        "description": "Get list of tasks with this endpoint",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "page",
-            "schema": {
-              "type": "integer"
-            },
-            "example": 1
-          },
-          {
-            "in": "query",
-            "name": "perPage",
-            "schema": {
-              "type": "integer",
-              "example": 10
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
-            "schema": {
-              "type": "string",
-              "example": "age"
-            },
-            "description": "All task's fields can be mentioned. Default value - _id"
-          },
-          {
-            "in": "query",
-            "name": "sortOrder",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
-              "example": "asc"
-            }
-          },
-          {
-            "in": "query",
-            "name": "minAvgMark",
-            "schema": {
-              "type": "number",
-              "example": 4
-            }
-          },
-          {
-            "in": "query",
-            "name": "maxAvgMark",
-            "schema": {
-              "type": "number",
-              "example": 10
-            }
-          },
-          {
-            "in": "query",
-            "name": "minAge",
-            "schema": {
-              "type": "number",
-              "example": 10
-            }
-          },
-          {
-            "in": "query",
-            "name": "maxAge",
-            "schema": {
-              "type": "number",
-              "example": 16
-            }
-          },
-          {
-            "in": "query",
-            "name": "gender",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "male",
-                "female",
-                "other"
-              ],
-              "example": "male"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully found tasks!",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found tasks!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "data",
-                        "page",
-                        "perPage",
-                        "totalItems",
-                        "totalPages",
-                        "hasNextPage",
-                        "hasPreviousPage"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/task"
-                          }
-                        },
-                        "page": {
-                          "type": "number",
-                          "example": 2
-                        },
-                        "perPage": {
-                          "type": "number",
-                          "example": 4
-                        },
-                        "totalItems": {
-                          "type": "number",
-                          "example": 4
-                        },
-                        "totalPages": {
-                          "type": "number",
-                          "example": 4
-                        },
-                        "hasNextPage": {
-                          "type": "boolean",
-                          "example": false
-                        },
-                        "hasPreviousPage": {
-                          "type": "boolean",
-                          "example": true
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Create task",
-        "operationId": "createTask",
-        "description": "Create a task with payload",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "title",
-                  "description",
-                  "dueDate",
-                  "priority",
-                  "assignedTo"
-                ],
-                "properties": {
-                  "title": {
-                    "description": "Task's title",
-                    "type": "string",
-                    "example": "Complete project report"
-                  },
-                  "description": {
-                    "description": "Task's description",
-                    "type": "string",
-                    "example": "Write and submit the project report by end of the week."
-                  },
-                  "dueDate": {
-                    "description": "Task's due date",
-                    "type": "string",
-                    "format": "date",
-                    "example": "2024-10-31"
-                  },
-                  "priority": {
-                    "description": "Task's priority level",
-                    "type": "string",
-                    "enum": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  "status": {
-                    "description": "Current status of the task",
-                    "type": "string",
-                    "enum": [
-                      "not started",
-                      "in progress",
-                      "completed"
-                    ]
-                  },
-                  "assignedTo": {
-                    "description": "ID of the user the task is assigned to",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
-                  "createdAt": {
-                    "description": "Date when the task was created",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2024-10-25T12:00:00Z"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Creates a task",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 201
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully created a task!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/task"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      }
-    },
-    "/task/{id}": {
-      "get": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Get task by id",
-        "operationId": "getTask",
-        "description": "Get task by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Get task by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found task with id 65ca67e7ae7f10c88b598384!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/task"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Update task",
-        "operationId": "updateTask",
-        "description": "Update task by ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "title": {
-                    "description": "Task's title",
-                    "type": "string",
-                    "example": "Complete report"
-                  },
-                  "description": {
-                    "description": "Task's description",
-                    "type": "string",
-                    "example": "Prepare and submit the financial report by the end of the week."
-                  },
-                  "dueDate": {
-                    "description": "Task's due date",
-                    "type": "string",
-                    "format": "date",
-                    "example": "2024-11-01"
-                  },
-                  "priority": {
-                    "description": "Priority level of the task",
-                    "type": "string",
-                    "enum": [
-                      "low",
-                      "medium",
-                      "high"
-                    ]
-                  },
-                  "isCompleted": {
-                    "description": "Status of task completion",
-                    "type": "boolean",
-                    "example": false
-                  },
-                  "attachment": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "File attachment for the task",
-                    "example": "https://res.cloudinary.com/dsf7ryper/image/upload/v1724619697/file.pdf"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Update task by ID",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully updated task"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/task"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Delete task by ID",
-        "operationId": "deleteTask",
-        "description": "Delete a task by its ID",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "66cb82062c60d9a89bb75c56"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Successfully deleted task, no content returned"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      }
-    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -1852,6 +1346,9 @@
           }
         }
       },
+      "path": {
+        "$ref": "../swagger/paths/boards/{id}/patch.yaml"
+      },
       "delete": {
         "tags": [
           "Boards"
@@ -1888,6 +1385,561 @@
           }
         }
       }
+    },
+    "/boards/{boardId}/columns": null,
+    "post": {
+      "$ref": "../swagger/paths/columns/post.yaml"
+    },
+    "/boards/{boardId}/columns/{columnId}": {
+      "patch": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Update Column by ID",
+        "operationId": "updateColumn",
+        "description": "Update a column by its ID, specified under a particular user.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66f19ff0bcd4dd2171ec0d22",
+              "description": "Unique identifier of the board"
+            }
+          },
+          {
+            "in": "path",
+            "name": "columnId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66f19ff0bcd4dd2171ec0d22",
+              "description": "Unique identifier of the column"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "New title for the column",
+                    "example": "Updated Column Title"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Column updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patched a column!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Column ID"
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Updated title of the column"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Delete Column by ID and its associated Tasks",
+        "operationId": "deleteColumnWithTasks",
+        "description": "Removes specified column and all tasks associated with it.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6727df6c4b3492bdaa888f95",
+              "description": "Unique identifier of the board"
+            }
+          },
+          {
+            "in": "path",
+            "name": "columnId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66f19ff0bcd4dd2171ec0d22",
+              "description": "Unique identifier of the column"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/boards/{boardId}/columns/{columnId}/tasks": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Create a Task",
+        "operationId": "createTask",
+        "description": "Create a task under a particular column.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6727df6c4b3492bdaa888f95",
+              "description": "Unique identifier of the board"
+            }
+          },
+          {
+            "in": "path",
+            "name": "columnId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66f19ff0bcd4dd2171ec0d22",
+              "description": "Unique identifier of the column"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "deadline"
+                ],
+                "properties": {
+                  "title": {
+                    "description": "Task's title",
+                    "type": "string",
+                    "example": "Complete project report"
+                  },
+                  "description": {
+                    "description": "Task's description",
+                    "type": "string",
+                    "example": "Write and submit the project report by end of the week."
+                  },
+                  "priority": {
+                    "description": "Task's priority level",
+                    "type": "string",
+                    "enum": [
+                      "low",
+                      "medium",
+                      "high",
+                      "none"
+                    ],
+                    "default": "none"
+                  },
+                  "deadline": {
+                    "description": "The deadline for completing the task. It must be a valid date.",
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-12-15"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates a task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a task!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/task"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/boards/{boardId}/columns/{columnId}/tasks/{taskId}": {
+      "patch": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Update a Task",
+        "operationId": "updateTask",
+        "description": "Update a task under a particular column.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6727df6c4b3492bdaa888f95",
+              "description": "Unique identifier of the board"
+            }
+          },
+          {
+            "in": "path",
+            "name": "columnId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66f19ff0bcd4dd2171ec0d22",
+              "description": "Unique identifier of the column"
+            }
+          },
+          {
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6727d414742499c95150c4fd",
+              "description": "Unique identifier of the task"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "description": "Task's title",
+                    "type": "string",
+                    "example": "Complete project report"
+                  },
+                  "description": {
+                    "description": "Task's description",
+                    "type": "string",
+                    "example": "Write and submit the project report by end of the week."
+                  },
+                  "priority": {
+                    "description": "Task's priority level",
+                    "type": "string",
+                    "enum": [
+                      "low",
+                      "medium",
+                      "high",
+                      "none"
+                    ],
+                    "default": "none"
+                  },
+                  "deadline": {
+                    "description": "The deadline for completing the task. It must be a valid date.",
+                    "type": "string",
+                    "format": "date",
+                    "example": "2024-12-15"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task updated successfully!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patched a task!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/task"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Delete task by ID",
+        "operationId": "deleteTask",
+        "description": "Removes specified task.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6727df6c4b3492bdaa888f95",
+              "description": "Unique identifier of the board"
+            }
+          },
+          {
+            "in": "path",
+            "name": "columnId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66f19ff0bcd4dd2171ec0d22",
+              "description": "Unique identifier of the column"
+            }
+          },
+          {
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6727d414742499c95150c4fd",
+              "description": "Unique identifier of the task"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/boards/{boardId}/columns/{columnId}/tasks/{taskId}/move": {
+      "patch": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Move a task between columns",
+        "operationId": "MoveTask",
+        "description": "Move a task from its current column to a specified target column within the same board.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "boardId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6727df6c4b3492bdaa888f95",
+              "description": "Unique identifier of the board"
+            }
+          },
+          {
+            "in": "path",
+            "name": "columnId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "66f19ff0bcd4dd2171ec0d22",
+              "description": "Unique identifier of the column"
+            }
+          },
+          {
+            "in": "path",
+            "name": "taskId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6727d414742499c95150c4fd",
+              "description": "Unique identifier of the task"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "newColumnId"
+                ],
+                "properties": {
+                  "newColumnId": {
+                    "description": "Id of the column where task should be moved",
+                    "type": "string",
+                    "example": "6727d4f7742499c95150c521"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Moves a task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Task moved successfully!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/task"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1895,115 +1947,6 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
-      }
-    },
-    "schemas": {
-      "task": {
-        "type": "object",
-        "required": [
-          "_id",
-          "title",
-          "description",
-          "dueDate",
-          "priority",
-          "status"
-        ],
-        "properties": {
-          "_id": {
-            "description": "Task's id",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "title": {
-            "description": "Task's title",
-            "type": "string",
-            "example": "Complete project report"
-          },
-          "description": {
-            "description": "Task's description",
-            "type": "string",
-            "example": "Write and submit the project report by end of the week."
-          },
-          "dueDate": {
-            "description": "Task's due date",
-            "type": "string",
-            "format": "date",
-            "example": "2024-10-31"
-          },
-          "priority": {
-            "description": "Task's priority level",
-            "type": "string",
-            "enum": [
-              "low",
-              "medium",
-              "high"
-            ]
-          },
-          "status": {
-            "description": "Current status of the task",
-            "type": "string",
-            "enum": [
-              "not started",
-              "in progress",
-              "completed"
-            ]
-          },
-          "assignedTo": {
-            "description": "ID of the user the task is assigned to",
-            "type": "string",
-            "example": "65e4decdd286b30065d54af9"
-          },
-          "createdAt": {
-            "description": "Date when the task was created",
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-10-25T12:00:00Z"
-          }
-        }
-      },
-      "users": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "User's name",
-            "type": "string",
-            "example": "John Doe"
-          },
-          "email": {
-            "description": "User's email",
-            "type": "string",
-            "example": "john.doe@example.com"
-          },
-          "password": {
-            "description": "User's password (required may contain Latin letters, numbers and symbols; - signs can be in different registers; - can contain from 8 to 64 characters (inclusive); - cannot contain spaces);",
-            "type": "string",
-            "example": "P@ssw0rd"
-          },
-          "photoUrl": {
-            "description": "Link to user's avatar",
-            "oneOf": [
-              {
-                "type": "string",
-                "format": "binary",
-                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
-              },
-              {
-                "type": "null",
-                "example": null
-              }
-            ]
-          },
-          "theme": {
-            "description": "theme of interface",
-            "type": "string",
-            "enum": [
-              "dark",
-              "light",
-              "violet"
-            ],
-            "example": "light"
-          }
-        }
       }
     },
     "responses": {
@@ -2152,6 +2095,115 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "users": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "description": "User's password (required may contain Latin letters, numbers and symbols; - signs can be in different registers; - can contain from 8 to 64 characters (inclusive); - cannot contain spaces);",
+            "type": "string",
+            "example": "P@ssw0rd"
+          },
+          "photoUrl": {
+            "description": "Link to user's avatar",
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "binary",
+                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+              },
+              {
+                "type": "null",
+                "example": null
+              }
+            ]
+          },
+          "theme": {
+            "description": "theme of interface",
+            "type": "string",
+            "enum": [
+              "dark",
+              "light",
+              "violet"
+            ],
+            "example": "light"
+          }
+        }
+      },
+      "task": {
+        "type": "object",
+        "required": [
+          "title",
+          "deadline"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Task's id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "title": {
+            "description": "Task's title",
+            "type": "string",
+            "example": "Complete project report"
+          },
+          "description": {
+            "description": "Task's description",
+            "type": "string",
+            "example": "Write and submit the project report by end of the week."
+          },
+          "priority": {
+            "description": "Task's priority level",
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "none"
+            ],
+            "default": "none"
+          },
+          "deadline": {
+            "description": "The deadline for completing the task",
+            "type": "string",
+            "format": "date",
+            "example": "2024-12-15"
+          },
+          "columnId": {
+            "description": "Id of the column under which tasks are stored",
+            "type": "string",
+            "example": "66f19ff0bcd4dd2171ec0d22"
+          },
+          "userId": {
+            "description": "Id of the user under which tasks are stored",
+            "type": "string",
+            "example": "6726542a5ed62c2ba1cf9a0e"
+          },
+          "createdAt": {
+            "description": "The date and time when the task was created.",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-11-03T20:51:57.531Z"
+          },
+          "updatedAt": {
+            "description": "The date and time when the task was last updated.",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-11-04T00:22:04.231Z"
           }
         }
       }
