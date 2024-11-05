@@ -5,6 +5,7 @@ const columnSchema = new Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     userId: { type: Schema.Types.ObjectId, ref: 'users' },
     boardId: {
