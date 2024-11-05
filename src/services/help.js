@@ -17,7 +17,7 @@ export const helpMailService = async (email, message) => {
     const emailByUser = await helpMail({
       from: env(SMTP.SMTP_FROM),
       to: email,
-      subject: 'We are always ready to help you',
+      subject: 'We always ready to help you',
       html: generateHelpEmail({
         name: user.name,
         userMessage: message,
