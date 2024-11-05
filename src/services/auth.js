@@ -37,10 +37,7 @@ export const loginUser = async loginData => {
     refreshTokenValidUntil: new Date(Date.now() + THIRTY_DAYS),
   });
   return {
-    user: {
-      name: user.name,
-      email: user.email
-    },
+    user,
     session
   }
   
