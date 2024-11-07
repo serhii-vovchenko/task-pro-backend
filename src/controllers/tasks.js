@@ -74,14 +74,14 @@ export const deleteTaskController = async (req, res, next) => {
 
 export const moveTaskController = async (req, res, next) => {
   const { taskId } = req.params;
-  const { newColumnId } = req.body;
+  const { columnId } = req.body;
   const { _id: userId } = req.user;
 
-  if (!taskId || !newColumnId) {
+  if (!taskId || !columnId) {
     throw createHttpError(400, 'Task ID and new column ID are required');
   }
 
-  const movedTask = await moveTask(taskId, userId, newColumnId);
+  const movedTask = await moveTask(taskId, userId, columnId);
 
   if (!movedTask) {
     throw createHttpError(404, 'Task not found');

@@ -32,6 +32,10 @@ tasksRouter.patch(
   ctrlWrapper(updateTaskController),
 );
 tasksRouter.delete('/:taskId', ctrlWrapper(deleteTaskController));
-tasksRouter.patch('/:taskId/move', ctrlWrapper(moveTaskController));
+tasksRouter.patch(
+  '/:taskId/move',
+  upload.none(),
+  ctrlWrapper(moveTaskController),
+);
 
 export default tasksRouter;
