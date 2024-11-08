@@ -23,16 +23,7 @@ export const createTaskController = async (req, res) => {
   res.status(201).json({
     status: 201,
     message: 'Successfully created a task!',
-    data: {
-      task: {
-        id: task._id,
-        title: task.title,
-        description: task.description,
-        deadline: task.deadline,
-        userId,
-        columnId,
-      },
-    },
+    data: task,
   });
 };
 
