@@ -74,7 +74,7 @@ export const deleteTaskController = async (req, res, next) => {
 
 export const moveTaskController = async (req, res, next) => {
   const { taskId } = req.params;
-  const { columnId } = req.body;
+  const { newColumnId: columnId } = req.body;
   const { _id: userId } = req.user;
 
   if (!taskId || !columnId) {
