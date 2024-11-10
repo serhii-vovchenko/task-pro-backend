@@ -23,13 +23,13 @@ export const patchUserThemeController = async (req, res, next) => {
 
 export const patchUserController = async (req, res) => {
   const photoUrl = req.file && (await saveFileToCloudinary(req.file));
-  const password = req.body.password;
+  const { password, ...restBody } = req.body;
   let payload;
   if (password) {
     const encryptedPwd = await bcrypt.hash(password, 10);
-    payload = { ...req.body, password: encryptedPwd, photoUrl };
+    payload = { ...restBody, password: encryptedPwd, photoUrl };
   } else {
-    payload = { ...req.body, photoUrl };
+    payload = { ...restBody, photoUrl };
   }
   const user = await patchUser(payload, req.user._id);
   res.json({
