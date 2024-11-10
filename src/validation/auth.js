@@ -50,8 +50,6 @@ export const updateUserSchema = Joi.object({
     'string.empty': 'Email cannot be empty.',
     'string.email': 'Invalid email format.',
   }),
-  password: Joi.string().min(8).max(64).messages({
-    'string.empty': 'Password cannot be empty.',
-  }),
+  password: Joi.string().min(8).max(64).allow(''),
   photoUrl: Joi.any(),
 });
