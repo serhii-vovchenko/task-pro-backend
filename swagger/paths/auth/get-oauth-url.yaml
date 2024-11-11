@@ -1,0 +1,51 @@
+tags:
+  - Auth
+summary: Get Google OAuth URL
+operationId: getGoogleOAuthUrl
+description: 'Retrieve Google OAuth authorization URL for user login or signup'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Successfully generated Google OAuth URL
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully retrieved Google OAuth URL!
+            data:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: 'https://accounts.google.com/o/oauth2/v2/auth?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=email'
+  '500':
+    description: Server error while generating Google OAuth URL
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 500
+            message:
+              type: string
+              example: 'Internal server error'
+            data:
+              type: object
+              example: {}
