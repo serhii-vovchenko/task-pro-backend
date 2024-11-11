@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const backgraundsSchema = new Schema({
+const backgroundsSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -25,12 +25,13 @@ const backgraundsSchema = new Schema({
   },
 });
 
-export const backgraundsBorderSchema = new Schema(
+export const backgroundsBorderSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
       enum: [
+        'bg-0',
         'bg-1',
         'bg-2',
         'bg-3',
@@ -70,4 +71,4 @@ export const backgraundsBorderSchema = new Schema(
   { _id: false },
 );
 
-export const BackgroundCollection = model('backgrounds', backgraundsSchema);
+export const BackgroundCollection = model('backgrounds', backgroundsSchema);
