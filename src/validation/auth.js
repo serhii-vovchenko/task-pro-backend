@@ -53,3 +53,10 @@ export const updateUserSchema = Joi.object({
   password: Joi.string().min(8).max(64).allow(''),
   photoUrl: Joi.any(),
 });
+
+export const loginWithGoogleOAuthSchema = Joi.object({
+  code: Joi.string().required().messages({
+    'any.required': 'Code is required.',
+    'string.empty': 'Code cannot be empty.',
+  }),
+});
