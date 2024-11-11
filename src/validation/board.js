@@ -26,6 +26,7 @@ export const createBoardSchema = Joi.object({
     }),
   backgroundName: Joi.string()
     .valid(
+      'bg-0',
       'bg-1',
       'bg-2',
       'bg-3',
@@ -71,6 +72,7 @@ export const updateBoardSchema = Joi.object({
     }),
   backgroundName: Joi.string()
     .valid(
+      'bg-0',
       'bg-1',
       'bg-2',
       'bg-3',
