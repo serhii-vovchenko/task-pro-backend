@@ -12,10 +12,10 @@ const oauthConfig = JSON.parse(await readFile(PATH_JSON));
 const googleOAuthClient = new OAuth2Client({
   clientId: env(GOOGLE_AUTH.CLIENT_ID),
   clientSecret: env(GOOGLE_AUTH.CLIENT_SECRET),
-  redirectUri: oauthConfig.web.redirect_uris[0],
+  redirectUri: oauthConfig.web.redirect_uris[1],
 });
 
-export const generateAuthUrl = () => 
+export const generateAuthUrl = () =>
   googleOAuthClient.generateAuthUrl({
     access_type: 'offline',
     scope: [
@@ -24,7 +24,7 @@ export const generateAuthUrl = () =>
     ],
   });
 
-export const validateCode = async (code) => {
+export const validateCode = async code => {
   try {
     const response = await googleOAuthClient.getToken(code);
     if (!response.tokens.id_token) throw createHttpError(401, 'Unauthorized');
@@ -40,7 +40,7 @@ export const validateCode = async (code) => {
   }
 };
 
-export const getFullNameFromGoogleTokenPayload = (payload) => {
+export const getFullNameFromGoogleTokenPayload = payload => {
   let fullName = 'Guest';
   if (payload.given_name && payload.family_name) {
     fullName = `${payload.given_name} ${payload.family_name}`;
